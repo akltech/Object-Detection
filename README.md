@@ -80,7 +80,7 @@ To better detect objects in image, you must process the image before feeding it 
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
   ```frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)```
   
-   ![Laplacian Edge Detection](https://imgur.com/c3oWLRZ)
+   ![Laplacian Edge Detection](laplcian.JPG)
   
 ## Step 3: Use the Haar Cascade Classifier to detect vehicles
 
