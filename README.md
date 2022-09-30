@@ -81,7 +81,7 @@ To better detect objects in image, you must process the image before feeding it 
   ```frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)```
   <br />
 <p align="center">
-  <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/fc783ce0a9fe6450f148f850d8fabb0e3ea4feaa/laplcian.jpg">
+  <img width="460" height="450" src="Laplacian_edge_detection.jpg">
 </p>
 <br />
 
