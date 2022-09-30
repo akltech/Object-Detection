@@ -133,5 +133,11 @@ Then, right click on the video and go to ```Properties```, ```Change...```, and 
   
 Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
 
- ![sample detection](with color.JPG)
+<br />
+<br />
+<p align="center">
+  <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
+</p>
+
+
 
