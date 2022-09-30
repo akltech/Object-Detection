@@ -16,14 +16,15 @@ This tutorial provides a hands-on introduction to video object detection with Op
 
 ## Requirements
 
-This tutorial uses the computer vision library openCV, if you do not already have openCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
-Familiarity with image processing is helpful but not required.
+This tutorial uses the computer vision library OpenCV, if you do not already have openCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
+Familiarity with image processing and machine learning is helpful but not required.
+
 
 ## Before you begin 
 
-* Open the anaconda prompt and run the command pip install opencv-contrib-python. OpenCV contrib is a specialized module that contains Haar Cascades, and specifically the CascadeClassifier, which will be used to read the pretrained model for cars. The Open-cv contrib module is not included in the opencv installation through anaconda, or pip installation of it.
+* If you installed OpenCV on Windows with Anaconda, open the anaconda prompt and run the command ```pip install opencv-contrib-python```. OpenCV-contrib is an additional module that contains Haar Cascades classifiers, the machine learning detection algorithms that you will use in your program. 
 
-* Download the detect_demo.zip from here and unzip the contents into your code directory. The file contains a sample input video and an XML file of a pre-trained Haar Cascade classifier for cars.
+* Download the samplevideo.mp4 and car.xml files from the program files [here](https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files) and extract the contents into your code directory. The file contains a sample input video and an XML file for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. In this tutorial, you will use a pre-trained classifier, or algorithm, for cars using the car XML file.
 
 ## Step 1: Read and write your input video
 
