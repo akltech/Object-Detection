@@ -118,6 +118,7 @@ After preprocessing the frames, use pre-trained Haar cascade models to detect ca
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
    ```
+Access the complete code [here.](https://github.com/akltech/Vehicle-Detection/blob/b836e9383ba34d36bf3994b9ad38f19355a84dee/vehicle_detection_model.py)
 
 ##  Common Errors 
 
@@ -131,19 +132,19 @@ You may receive this error when you try to play an output video on Windows.
 One possible solution is to download the VLC media player for Windows [here](https://www.videolan.org/vlc/download-windows.html).
 Then, right click on the video and go to ```Properties```, ```Change...```, and select ```VLC Media Player```.
 
-
+<br />
 **Cascaade Classifier is not performing as expected**
 
   > SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set
   
 Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
 
+
 <br />
 <br />
 <p align="center">
   <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
 </p>
-
 
 
 
