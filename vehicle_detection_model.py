@@ -39,7 +39,9 @@ while True:
         # Displays video 
         cv2.imshow("frame", frame)
 
-
+        #saves video frame
+        out.write(frame)
+        
         # Press Q on keyboard to  exit
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
