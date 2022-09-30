@@ -1,6 +1,6 @@
 # Vehicle-Detection
 
-This tutorial provides a hands-on introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create a vehicle detection program, complete the following steps.
+This tutorial provides a hands-on introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
 
 ## Tasks
 
@@ -14,6 +14,7 @@ This tutorial provides a hands-on introduction to video object detection with Op
 
   * [Common Errors](#common-errors)
 
+
 ## Requirements
 
 This tutorial uses the computer vision library OpenCV, if you do not already have openCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
@@ -24,7 +25,7 @@ Familiarity with image processing and machine learning is helpful but not requir
 
 * If you installed OpenCV on Windows with Anaconda, open the anaconda prompt and run the command ```pip install opencv-contrib-python```. OpenCV-contrib is an additional module that contains Haar Cascades classifiers, the machine learning detection algorithms that you will use in your program. 
 
-* Download the samplevideo.mp4 and car.xml files from the program files [here](https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files) and extract the contents into your code directory. The file contains a sample input video and an XML file for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. In this tutorial, you will use a pre-trained classifier, or algorithm, for cars using the car XML file.
+* Download the samplevideo.mp4 and car.xml files from the program files [here](https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files) and extract the contents into your code directory. The program file contains a sample input video and a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. The XML file includes features classified as a car or non-car. 
 
 ## Step 1: Read and write your input video
 
@@ -125,15 +126,17 @@ Access the complete code [here.](https://github.com/akltech/Vehicle-Detection/bl
 
 This section lists errors common to the openCV-Python API.
 
+<br />
+
 **The output video is not playing**
 
   > This item was encoded in a format that's not supported.
-You may receive this error when you try to play an output video on Windows. 
 
 One possible solution is to download the VLC media player for Windows [here](https://www.videolan.org/vlc/download-windows.html).
 Then, right click on the video and go to ```Properties```, ```Change...```, and select ```VLC Media Player```.
 
 <br />
+
 **Cascaade Classifier is not performing as expected**
 
   > SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set
