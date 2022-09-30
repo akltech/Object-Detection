@@ -79,7 +79,12 @@ To better detect objects in image, you must process the image before feeding it 
   4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually only black and white.Edge detection is commonly used to convert an image to binary format by detecting the edges and curves and displaying them on a dark background.
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
   ```frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)```
-  
+  <br />
+<p align="center">
+  <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/fc783ce0a9fe6450f148f850d8fabb0e3ea4feaa/laplcian.jpg">
+</p>
+<br />
+
 ## Step 3: Use the Haar Cascade Classifier to detect vehicles
 
 After preprocessing the frames, use pre-trained Haar cascade models to detect cars in a video.
@@ -138,6 +143,7 @@ Ensure that you have ```opencv-contrib-python``` installed. Return to [Before yo
 <p align="center">
   <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
 </p>
+
 
 
 
