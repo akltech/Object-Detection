@@ -80,14 +80,16 @@ To better detect objects in image, you must process the image before feeding it 
 
   4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually only black and white.Edge detection is commonly used to convert an image to binary format by detecting the edges and curves and displaying them on a dark background.
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
-  ```frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)```
+  ```
+  frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
+  ```
   <br />
 <p align="center">
-  <img width="460" height="450" src="Laplacian_edge_detection.jpg">
+  <img width="440" height="430" src="Laplacian_edge_detection.jpg">
 </p>
 <br />
 <p align="center">
-Figure 1. Laplacian Edge Detection of a highway. 
+Laplacian Edge Detection of a highway. 
 </p>
 <br />
 
@@ -151,7 +153,7 @@ Ensure that you have ```opencv-contrib-python``` installed. Return to [Before yo
 <br />
 <br />
 <p align="center">
-  <img width="460" height="450" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
+  <img width="450" height="440" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
 </p>
 
 
