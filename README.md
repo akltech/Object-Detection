@@ -80,8 +80,6 @@ To better detect objects in image, you must process the image before feeding it 
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
   ```frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)```
   
-   ![Laplacian Edge Detection](laplcian.JPG)
-  
 ## Step 3: Use the Haar Cascade Classifier to detect vehicles
 
 After preprocessing the frames, use pre-trained Haar cascade models to detect cars in a video.
@@ -135,5 +133,5 @@ Then, right click on the video and go to ```Properties```, ```Change...```, and 
   
 Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
 
- ![sample detection](https://imgur.com/LJOZk7X)
+ ![sample detection](with color.JPG)
 
