@@ -86,6 +86,10 @@ To better detect objects in image, you must process the image before feeding it 
   <img width="460" height="450" src="Laplacian_edge_detection.jpg">
 </p>
 <br />
+<p align="center">
+Figure 1. Laplacian Edge Detection of a highway. 
+</p>
+<br />
 
 ## Step 3: Use the Haar Cascade Classifier to detect vehicles
 
