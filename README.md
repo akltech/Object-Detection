@@ -17,8 +17,8 @@ This tutorial provides a hands-on introduction to video object detection with Op
 
 ## Requirements
 
-This tutorial uses the computer vision library OpenCV, if you do not already have openCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
-Familiarity with image processing and machine learning is helpful but not required.
+This tutorial uses the computer vision library OpenCV, if you do not already have OpenCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
+Familiarity with image processing terms, such as noise reduction, is helpful but not required. Experience with machine learning algorithms is also not required. 
 
 
 ## Before you begin 
@@ -35,7 +35,7 @@ OpenCV has built-in functions for importing and opening the frames of video file
 
   1. Import the following libraries: ```cv2``` ```numpy``` ```datetime```
   
-  2. Play the video by from a file by changing the camera index in the ```cv.CascadeClassifier()``` method of the ```cv2``` library to a file name. The following code can be modified for your use:
+  2. Play the video from a file by changing the camera parameter in the ```cv.CascadeClassifier()``` method of the ```cv2``` library to a path. The following code can be modified for your use:
   ```
   input_video = 'C:/CVdetect/samplevideo.mp4'
   cap = cv2.VideoCapture(input_video)
@@ -65,7 +65,8 @@ OpenCV has built-in functions for importing and opening the frames of video file
     
 ## Step 2: Apply image preprocessing techniques
 
-To better detect objects in image, you must process the image before feeding it to the detection algorithm, or the Haar Cascades classifier. Applying techniques with openCV such as gaussian blurring, reducing noise and smoothing the image reduces the complexity of the applied algorithm. You will begin by applying a gaussian blur to reduce the noise level and dilating the image. For more information about image pre-processing functions in openCV, see Image Filtering.
+To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For more information about image preprocessing functions in OpenCV, see [Image Filtering
+(https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html).
 
 **To apply image preprocessing techniques**
 
@@ -78,7 +79,7 @@ To better detect objects in image, you must process the image before feeding it 
   3. ```cv.cvtColor()``` method changes the color space of an image. You can convert each of the frames to a gray scale by using the space transformation technique ```BGR GRAY```
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
 
-  4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually only black and white.Edge detection is commonly used to convert an image to binary format by detecting the edges and curves and displaying them on a dark background.
+  4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually black and white. Developers often use edge detection to convert an image to binary format by detecting the edges and curves and displaying them on a dark background. The easiest and most effective way to apply edge detection to a video is by using Laplacian edge detection, a method in the OpenCV library.
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
   ```
   frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
