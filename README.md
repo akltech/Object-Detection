@@ -78,7 +78,7 @@ To better detect objects in an image, you must process the image before feeding 
   3. ```cv.cvtColor()``` method changes the color space of an image. You can convert each of the frames to a gray scale by using the space transformation technique ```BGR GRAY```
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
 
-  4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually black and white. Developers often use edge detection to convert an image to binary format by detecting the edges and curves and displaying them on a dark background. The easiest and most effective way to apply edge detection to a video is by using Laplacian edge detection, a method in the OpenCV library.
+  4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually black and white. In computer vision, developers commonly use edge detection to convert an image to binary format by detecting the edges and curves and displaying them in white on a dark background. The easiest and most effective way to apply edge detection to a video is by using Laplacian edge detection, a method in the OpenCV library.
   Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
   ```
   frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
