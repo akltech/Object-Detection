@@ -33,7 +33,7 @@ OpenCV has built-in functions for importing and opening the frames of video file
 
 **To display and export your video automatically**
 
-  1. Import the following libraries: ```cv2``` ```numpy``` ```datetime```
+  1. Import the following libraries: ```cv2```, ```numpy```, and ```datetime```
   
   2. Play the video from a file by changing the camera parameter in the ```cv.CascadeClassifier()``` method of the ```cv2``` library to a path. The following code can be modified for your use:
   ```
