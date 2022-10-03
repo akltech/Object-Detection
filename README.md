@@ -65,7 +65,7 @@ OpenCV has built-in functions for importing and opening the frames of video file
     
 ## Step 2: Apply image preprocessing techniques
 
-To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For more information about image preprocessing functions in OpenCV, see [Image Filtering
+To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For more information about image preprocessing functions in OpenCV, see [Image Filtering]
 (https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html).
 
 **To apply image preprocessing techniques**
