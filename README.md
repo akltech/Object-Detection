@@ -79,7 +79,7 @@ To better detect objects in an image, you must process the image before feeding 
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
 
   4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually black and white. In computer vision, edge detection is one of the standard methods for converting an image to binary format by producing the edges and curves of an image in white on a black background. The easiest and most effective way to apply edge detection to a video is by using Laplacian edge detection, a method in the OpenCV library. An image's Laplacian highlights areas where the intensity changes rapidly, making Laplacian edge detection ideal for converting videos to binary format.
-  Use the ```cv.Laplacian``` method, which applies Laplacian edge detection, to see this result.
+  Use the ```cv.Laplacian``` method to apply edge detection to your video.
   ```
   frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
   ```
