@@ -1,4 +1,4 @@
-# Vehicle-Detection
+# Tutorial: Video Vehicle Detection with OpenCV
 
 This tutorial provides a hands-on introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
 
