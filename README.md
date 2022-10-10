@@ -1,6 +1,6 @@
 # Create an OpenCV Program for Vehicle Detection 
 
-This tutorial provides a hands-on introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
+This tutorial provides a hands-on, step-by-step introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
 
 ## Tasks
 
@@ -29,25 +29,25 @@ Familiarity with image processing terms, such as noise reduction, is helpful but
 
 ## Step 1: Read and write your input video
 
-OpenCV has built-in functions for importing and opening the frames of video files. For this tutorial, you will include an input and output path.
+OpenCV has built-in methods for importing, opening and exporting the frames of video files. 
 
-**To display and export your video automatically**
+**Display and export your video**
 
   1. Import the following dependencies: ```cv2```, ```numpy```, and ```datetime```
   
-  2. Play the video from a file by changing the camera parameter in the ```cv.CascadeClassifier()``` method of the ```cv2``` library to a path. The following code can be modified for your use:
-  ```
-  input_video = 'C:/CVdetect/samplevideo.mp4'
-  cap = cv2.VideoCapture(input_video)
-  ```
+  2. To play the video from a file, change the camera parameter in the ```CascadeClassifier()``` method of the ```cv2``` library to a file path. The following code sample shows how to use the ```CascadeClassifier()``` method. For information about other methods, see [cv Namespace Reference.](https://docs.opencv.org/4.x/d2/d75/namespacecv.html)
+```
+    input_video = 'C:/CVcars/samplevideo.mp4'
+    cap = cv2.VideoCapture(input_video)
+```
   
-  3. Obtain the default resolutions of the video frame. The default resolutions depend on your system.
-  ```
-  frame_width = int(cap.get(3))
-  frame_height = int(cap.get(4))
-  ```
+  3. To obtain the default resolutions of your video frame, call the ```get()``` method. The default resolutions will depend on your system.
+```
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
+```
   
-  4. Automatically export the video into a directory using the ```cv.VideoWriter``` method.
+  4. To automatically export the video into a directory of your choice, call the ```VideoWriter()``` method. 
   ```
   #writes a new video for each iteration with today's date
   out = cv2.VideoWriter(f'C:/detect/test{datetime.date.today()}.mp4',cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
