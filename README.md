@@ -1,4 +1,4 @@
-# Tutorial: Video Vehicle Detection with OpenCV
+# Create an OpenCV Program for Vehicle Detection 
 
 This tutorial provides a hands-on introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
 
@@ -106,7 +106,7 @@ After preprocessing the frames, use pre-trained Haar cascade models to detect ca
   ```
   
   2. Use the ```cv.detectMultiScale()``` to detect the vehicles. ```cv.detectMultiScale()``` detects objects of different sizes in our input video and returns the detected objects as a list of rectangles. 
-  The ```cv.rectangle()`` method reads from list of rectangles that we processed from our video to draw rectangles around the cars.
+  The ```cv.rectangle()`` method reads from list of rectangles that you processed from our video to draw rectangles around the cars.
   ```
         # detects objects of different sizes from our input video and outputs list of rectangles
         cars = car_cascade.detectMultiScale(gray, 1.1, 1)
