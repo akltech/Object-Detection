@@ -1,6 +1,6 @@
 # Create an OpenCV Program for Vehicle Detection 
 
-This tutorial provides a hands-on, step-by-step introduction to video object detection with OpenCV-Python, the Python API of OpenCV. To create your own vehicle detection program, complete the following steps.
+This tutorial provides a hands-on, step-by-step introduction to object detection with video using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create your own vehicle detection program, complete the following steps.
 
 ## Tasks
 
@@ -17,15 +17,22 @@ This tutorial provides a hands-on, step-by-step introduction to video object det
 
 ## Requirements
 
-This tutorial uses the computer vision library OpenCV, if you do not already have OpenCV installed please [visit here](https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb) for Window's installation. 
-Familiarity with image processing terms, such as noise reduction, is helpful but not required. Experience with machine learning algorithms is also not required. 
+OpenCV and Python are required to run the code sample locally. If you are on Windows and do not already have OpenCV installed see <a href="https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb" target="_blank">Installing OpenCV for Python.</a>
+Familiarity with computer vision and machine learning terms is helpful but not required. 
 
 
 ## Before you begin 
 
-* If you installed OpenCV on Windows with Anaconda, open the anaconda prompt and run the command ```pip install opencv-contrib-python```. OpenCV-contrib is an additional module that contains Haar Cascades classifiers, the machine learning detection algorithms that you will use in your program. 
+* Install OpenCV-contrib. OpenCV-contrib contains Haar Cascades classifiers, or machine learning detection algorithms that you will use in your program. When OpenCV-Python is installed with Anaconda, the Haar Cascade classifiers are typically missing. 
+  <br></p>
+To install the extra module, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
+    ```
+    pip install opencv-contrib-python
+    ```
 
-* Download the samplevideo.mp4 and car.xml files from the program files [here](https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files) and extract the contents into your code directory. The program file contains a sample input video and a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. The XML file includes features classified as a car or non-car. 
+*  Download the ```samplevideo``` MP4 file and the ```car``` XML file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo``` MP4 file contains a sample input video. 
+<br></p>
+The XML file contains a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. ```car.xml``` includes features classified as a car or non-car. This way, the algorithm training for vehicles is already complete. 
 
 ## Step 1: Read, display and write a video.
 
