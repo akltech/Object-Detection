@@ -1,16 +1,15 @@
 import cv2
-import numpy as np
 import datetime
 
 cap = cv2.VideoCapture('C:/detect2/samplevideo.mp4')
 
-# Obtain the default resolutions of the frame. The frame resolutions are system dependent. 
+# Modify the frame resolution. The default frame resolution is system dependent. 
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
 
 
-# Exports the video from each run 
-out = cv2.VideoWriter(f'C:/detect2/test{datetime.date.today()}.mp4',cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
+# Export the video from each run 
+out = cv2.VideoWriter(f'C:/CV/test{datetime.date.today()}.mp4',cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
 
 while True:
     # Capture each frame of the video
@@ -23,26 +22,26 @@ while True:
         # Apply dilation to the frames
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # Apply laplacian edge detection (binary format)
+        # Apply laplacian edge detection to convert frames to binary format
         frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
 
         # Begin detection
-        # The classifier reads the pretrained model
+        # Feed the pretrained model to the classifier
         car_cascade = cv2.CascadeClassifier('C:/detect2/car.xml')
-        # Detects objects of different sizes from our input video and outputs list of rectangles
+        # Detect objects of different sizes from your input video and return a list of rectangles
         cars = car_cascade.detectMultiScale(gray, 1.1, 1)
-        # Reads the list of rectangles to draw rectangle boundaries in each frame
+        # Read the list of rectangles to draw rectangle boundaries around the cars in each frame
         for (x, y, w, h) in cars:
             cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
 
 
-        # Displays video 
+        # Display video 
         cv2.imshow("frame", frame)
 
-        #saves video frame
+        # Save video frame
         out.write(frame)
 
-        # Press Q on keyboard to  exit
+        # Press Q on keyboard to exit
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
