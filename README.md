@@ -29,9 +29,9 @@ Familiarity with image processing terms, such as noise reduction, is helpful but
 
 ## Step 1: Read, display and write a video.
 
-OpenCV's HighGUI API provides methods to communicate with your computer hardware and file system and open and interact with a GUI (Graphical User Interface). A GUI allows you to interact with a computer system through visual graphics, such as the file icons on a Windows OS. With the HighGUI module, you can read and write videos into your file system and view them in real time in OpenCV's High-level GUI.
+OpenCV's HighGUI API provides methods to access your computer hardware and file system and display video streams in the High-level GUI (Graphical User Interface). A GUI allows you to interact with a computer system through visual graphics, such as clickable file icons on a Windows OS. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
 
-To import, view, and export a video, follow these steps:
+To load, view, and write a video, follow these steps:
 
   1. Import the dependencies: ```cv2``` and ```DateTime```
 
