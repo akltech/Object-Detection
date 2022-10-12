@@ -30,7 +30,7 @@ To install the extra module, open the Anaconda prompt and use the ```pip``` <a h
     pip install opencv-contrib-python
     ```
 
-*  Download the ```samplevideo``` MP4 file and the ```car``` XML file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo``` MP4 file contains a sample input video. 
+*  Download the ```samplevideo.mp4``` file and the ```car.xml``` file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo.mp4``` file contains a sample input video. 
 <br></p>
 The XML file contains a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. ```car.xml``` includes features classified as a car or non-car. This way, the algorithm training for vehicles is already complete. 
 
