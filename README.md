@@ -38,7 +38,7 @@ The XML file contains a pre-trained classifier for cars. Training refers to feed
 
 OpenCV's HighGUI API provides methods to access your computer hardware and file system and display video streams in the High-level GUI (Graphical User Interface). A GUI allows you to interact with a computer system through visual graphics, such as clickable file icons on a Windows OS. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
 
-To load, view, and write a video, follow these steps:
+***To load, view, and write a video, follow these steps:***
 
   1. Import the dependencies: ```cv2``` and ```DateTime```
 
@@ -104,7 +104,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
 
 To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For information about image preprocessing functions in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
 
-**Apply image preprocessing techniques:**
+**Apply image filtering:**
 
   1. Use the function ```GaussianBlur()``` to apply the Gaussian blur. Enter your source image, and width and height dimensions for the kernel size. The kernel size is used to determine the intensity of the applied effects. The blurring effect will increase or decrease with the kernel dimensions.
   ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
