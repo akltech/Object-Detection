@@ -110,12 +110,13 @@ To better detect objects in an image, you must process the image before feeding 
 
   1. Blur each frame with the ``` GausianBlur()``` method.
 The intensity of the blur depends on the kernel size; the more significant the kernel size, the more intense the blur effect.
+ <br></p>
   ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
   
   2. Accentuate the features of each frame and further blur the image by calling the ```Dilate()``` function.
   ```cv2.Dilate(frame, (5,5), 2)```
   
-  3. Convert the frames to grayscale using the ``cvtColor()``` method.  Color is usually not helpful in identifying features such as edges in computer vision applications. Though, there are exclusions. For example,  if you want to detect objects of a specific color, such as red cars on a gray highway, you need information about the colors. Because the colors on the vehicles in the sample video vary greatly, you will convert the images to grayscale.
+  3. Convert the frames to grayscale using the ```cvtColor()``` method.  Color is usually not helpful in identifying features such as edges in computer vision applications. Though, there are exclusions. For example,  if you want to detect objects of a specific color, such as red cars on a gray highway, you need information about the colors. Because the colors on the vehicles in the sample video vary greatly, you will convert the images to grayscale.
     <br></p>
 OpenCV-Python provides color conversion codes or flags for converting images to different color spaces. For BGR to gray conversion, input the flag ```BGR2GRAY```  to the ```cvtColor()``` function, as shown in the following code. For a list of color conversion codes, see <a href="https://docs.opencv.org/4.x/df/d9d/tutorial_py_colorspaces.html/." target="_blank">Changing Colorspaces.</a>
    <br></p>
@@ -215,4 +216,4 @@ Then, right click on the video and go to ```Properties```, ```Change...```, and 
 
 **SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set***
   
-Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
+Ensure ```opencv-contrib-python``` is installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
