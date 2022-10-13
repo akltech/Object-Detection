@@ -40,23 +40,23 @@ OpenCV's HighGUI API provides methods to access your computer hardware and file 
 
 ***To load, view, and write a video, follow these steps:***
 
-  1. Import the dependencies: ```cv2``` and ```DateTime```
+  1. Import the dependencies: ```cv2``` and ```datetime```
 
-  2. OpenCV’s HighGUI allows you to load a video from your file system by calling the ```VideoCapture()``` method. You can pass a parameter to ```VideoCapture()``` to tell it to capture a file from your computer or through a webcam. Though in this tutorial you will enter a file path or filename as an argument, you can typically pass in zero as a parameter to retrieve your computer’s webcam feed–for example, ```VideoCapture(0)```. 
+  2. To capture a video from your file system, call the ```VideoCapture()``` method. Pass a parameter to this method to capture a video file or a camera on your computer. For example, you can usually input ```0``` as an argument to retrieve your webcam feed. The following code sample shows how to use the ```VideoCapture()``` method to capture a video from your file system:
   <br></p>
-The following code sample shows how to use the ```VideoCapture()``` method to load a video from a file. For information about other methods, see <a href="https://docs.opencv.org/4.x/d2/d75/namespacecv.html" target="_blank">cv Namespace Reference.</a>
-<br></p>
     ```
     cap = cv2.VideoCapture('video path')
     ```
+    
   3. Set the output video's frame size by calling the ``` get()``` method. To obtain the default resolution of the frames in a video stream, you can pass an enumerator as a parameter to the ``` get()``` method--for example, ```CAP_PROP_FRAME_WIDTH```. The default resolutions of your system will apply. 
     <br></p>
 Alternatively, you can modify your output video's frame size by passing a number as a parameter to the ```get()``` method, as follows in the code sample below. For more information about other enumerators, see <a href="https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html" target="_blank">Enumerations.</a>
-  <br></p>
-    ```
-    frame_width = int(cap.get(3))
-    frame_height = int(cap.get(4))
-    ```
+<br></p>
+     ```
+     frame_width = int(cap.get(3))
+     frame_height = int(cap.get(4))
+     ```
+    
   4. To create a video file, make an instance of the ``` VideoWriter()``` class. The first parameter is the filename or the path to the output video file. Next, you must provide the fourcc codec, a four-character code. A codec is a hardware or software that compresses or decompresses a digital video–for example, you can compress an MP4 with the MPEG4 codec```mp4v```. This way, the output video frames will be compressed to a smaller file size suitable for viewing from your directory. To view a list of fourcc codes, see <a href="https://learn.microsoft.com/en-us/windows/win32/medfound/video-fourccs" target="_blank">Video FOURCCs.</a>
   <br></p>
 The final parameters of this method are, respectively, frames per second (FPS) and the frame size of the output video. Setting an FPS that is too fast or slow will interfere with your detection algorithm's accuracy. A good starting point for the FPS is ten seconds. The following code sample shows how to call the ``` VideoWriter()``` method to write a video file in a given directory with today’s date:
@@ -66,13 +66,15 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
     cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10,  (frame_width,frame_height)) 
     ```
+    
   5. Initialize a loop with a return value to indicate if you have captured the video frames. To capture each frame, invoke the ```read()``` function:
-    <br></p>
-    ```
-    while True:
-    ret, frame = cap.read()
-    if ret:    
-    ```
+ <br></p>
+     ```
+     while True:
+     ret, frame = cap.read()
+     if ret:
+     ```
+     
   6. To display the video frames in the HighGUI window, call the ```imshow()``` method: 
   <br></p>
     ```
@@ -83,12 +85,12 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
     out.write(frame)
     ```
-  8. Call the ```waitKey()``` function to process OpenCV's HighGUI event messages. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to process a video, as shown in the following code sample:
-  <br></p>
+  8. Call the ```waitKey()``` function to process OpenCV's HighGUI event messages. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
+<br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
     ```
+    
   9. Use the ```release()``` function to close all frames. This function closes the video capture object. 
   <br></p>
     ```
@@ -126,6 +128,7 @@ To apply Laplacian edge detection, modify the following code sample:
     ```
   <br />
   <img width="440" height="430" src="Laplacian_edge_detection.jpg">
+  Figure 1. A highway surveillance video converted to binary format with Laplacian edge detection.
 </p>
 <br />
  
@@ -153,31 +156,28 @@ To apply Laplacian edge detection, modify the following code sample:
  
 **Modify the code below to create your own vehicle detection program:**
 
-    ```
     import cv2
     import datetime
-    cap = cv2.VideoCapture('C:/detect2/samplevideo.mp4')
-    # Modify the frame resolution 
+    
+    cap = cv2.VideoCapture('C:/cardetect/samplevideo.mp4')
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
-    # Export the video from each run 
-    out = cv2.VideoWriter(f'C:/CV/test{datetime.date.today()}.mp4',cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
+    # Write the video file 
+    out = cv2.VideoWriter(f'C:/cardetect/test{datetime.date.today()}.mp4',
+    cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
 
     while True:
     # Capture each frame of the video
         ret, frame = cap.read()
         if ret:    
 
-            # Apply a gaussian blur to the frames
             frame = cv2.GaussianBlur(frame, (5, 5), 0)
-            # Apply dilation to the frames
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            # Apply laplacian edge detection to convert frames to binary  format
             frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
 
-            # Feed the pretrained model to the classifier
-            car_cascade = cv2.CascadeClassifier('C:/detect2/car.xml')
-            # Detect objects of different sizes from your input video 
+            # Load the car.xml file into the classifier
+            car_cascade = cv2.CascadeClassifier('C:/cardetect/car.xml')
+            # Detect objects of different sizes in each frame 
             # and return a list of rectangles
             cars = car_cascade.detectMultiScale(gray, 1.1, 1)
             # Read the list of rectangles to draw rectangle boundaries 
@@ -187,6 +187,7 @@ To apply Laplacian edge detection, modify the following code sample:
 
             cv2.imshow("frame", frame)
             out.write(frame)
+            # Break the loop with a key event
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 break
         else:
@@ -194,13 +195,10 @@ To apply Laplacian edge detection, modify the following code sample:
             
     cap.release()
     cv2.destroyAllWindows()
-    ```
 
 ## Common Errors 
 
 This section lists errors common to the openCV-Python API.
-
-<br />
 
 **This item was encoded in a format that's not supported**
 
@@ -212,8 +210,3 @@ Then, right click on the video and go to ```Properties```, ```Change...```, and 
 **SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set***
   
 Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
-
-
-
-
-
