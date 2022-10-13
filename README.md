@@ -38,7 +38,7 @@ The XML file contains a pre-trained classifier for cars. Training refers to feed
 
 OpenCV's HighGUI API provides methods to access your computer hardware and file system and display video streams in the High-level GUI (Graphical User Interface). A GUI allows you to interact with a computer system through visual graphics, such as clickable file icons on a Windows OS. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
 
-***To load, view, and write a video, follow these steps:***
+**To load, view, and write a video, follow these steps:**
 
   1. Import the dependencies: ```cv2``` and ```datetime```
 
