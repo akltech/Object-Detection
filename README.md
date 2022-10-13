@@ -158,26 +158,18 @@ This section lists errors common to the openCV-Python API.
 
 <br />
 
-**The output video is not playing**
+**This item was encoded in a format that's not supported**
 
-  > This item was encoded in a format that's not supported.
-
-One possible solution is to download the VLC media player for Windows [here](https://www.videolan.org/vlc/download-windows.html).
-Then, right click on the video and go to ```Properties```, ```Change...```, and select ```VLC Media Player```.
+One possible solution is to download the <a href="https://www.videolan.org/vlc/download-windows.html" target="_blank">VLC media player for Windows.</a>
+Then, right click on the video and go to ```Properties```, ```Change...```, and select ```VLC Media Player```
 
 <br />
 
-**Cascaade Classifier is not performing as expected**
-
-  > SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set
+**SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set***
   
 Ensure that you have ```opencv-contrib-python``` installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
 
 
-<br />
-<br />
-  <img width="450" height="440" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
-</p>
 
 
 
