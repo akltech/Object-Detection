@@ -1,6 +1,6 @@
 # Create an OpenCV Program for Vehicle Detection 
 
-This tutorial provides a hands-on, step-by-step introduction to object detection with video using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
+This tutorial provides a step-by-step introduction to object detection with video using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
 
 ## Objectives
 
