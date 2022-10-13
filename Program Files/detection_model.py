@@ -1,7 +1,7 @@
 import cv2
 import datetime
 
-# Retrieve a sample video
+# Capture the sample video from the system files
 cap = cv2.VideoCapture('C:/detect2/samplevideo.mp4')
 
 # Modify the frame resolution
@@ -54,6 +54,3 @@ cap.release()
 
 # Close the video window
 cv2.destroyAllWindows()
-   
-
-        
