@@ -198,7 +198,7 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Common Errors 
 
-This section lists errors common to the openCV-Python API.
+This section lists errors common to the OpenCV-Python API.
 
 **This item was encoded in a format that's not supported**
 
