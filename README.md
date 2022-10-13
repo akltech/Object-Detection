@@ -1,6 +1,6 @@
-# Create an OpenCV Program for Vehicle Detection 
+# Create an OpenCV Program for Vehicle Detection in a Video 
 
-This tutorial provides a step-by-step introduction to object detection with video using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
+This tutorial provides a hands-on, step-by-step introduction to object detection using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
 
 ## Objectives
 
@@ -10,7 +10,7 @@ This tutorial provides a step-by-step introduction to object detection with vide
 
   * [Step 2: Apply image preprocessing techniques](#step-2-apply-image-preprocessing-techniques)
 
-  * [Step 3: Use the Haar Cascade Classifier to detect vehicles](#step-3-use-the-haar-cascade-classifier-to-detect-vehicles)
+  * [Step 3: Use a Haar Cascade Classifier to detect vehicles](#step-3-use-a-haar-cascade-classifier-to-detect-vehicles)
 
   * [Common Errors](#common-errors)
 
@@ -23,9 +23,9 @@ Familiarity with computer vision and machine learning terms is helpful but not r
 
 ## Before you begin 
 
-* Install OpenCV-contrib. OpenCV-contrib contains Haar Cascades classifiers, or machine learning detection algorithms that you will use in your program. When OpenCV-Python is installed with Anaconda, the Haar Cascade classifiers are typically missing. 
+* Install ```OpenCV-contrib```. The module contains cascade classifiers, the machine-learning algorithms for real-time object detection. In this tutorial, you will use the Haar Cascade classifiers. If you installed OpenCV-Python with Anaconda, you must install an additional module to retrieve them. 
   <br></p>
-To install the extra module, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
+To install OpenCV-contrib, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
     ```
     pip install opencv-contrib-python
     ```
@@ -59,10 +59,11 @@ Alternatively, you can modify your output video's frame size by passing a number
     ```
   4. To create a video file, make an instance of the ``` VideoWriter()``` class. The first parameter is the filename or the path to the output video file. Next, you must provide the fourcc codec, a four-character code. A codec is a hardware or software that compresses or decompresses a digital video–for example, you can compress an MP4 with the MPEG4 codec```mp4v```. This way, the output video frames will be compressed to a smaller file size suitable for viewing from your directory. To view a list of fourcc codes, see <a href="https://learn.microsoft.com/en-us/windows/win32/medfound/video-fourccs" target="_blank">Video FOURCCs.</a>
   <br></p>
-The final parameters of this method are, respectively, the output video's FPS (frames per second) and the size of the output video. Setting a framerate that is too fast or slow will interfere with your detection algorithm's accuracy. A good starting point for the FPS is ten seconds. The following code sample shows how to call the ``` VideoWriter()``` method to write a video file in a given directory with today’s date:
+The final parameters of this method are, respectively, frames per second (FPS) and the frame size of the output video. Setting an FPS that is too fast or slow will interfere with your detection algorithm's accuracy. A good starting point for the FPS is ten seconds. The following code sample shows how to call the ``` VideoWriter()``` method to write a video file in a given directory with today’s date:
   <br></p>
     ```
-    out =    cv2.VideoWriter(f'C:/detect2/test{datetime.date.today()}.mp4',
+    out = cv2.VideoWriter(f'C:/detect2/test{datetime.date.today()}.mp4',``` <br></p>
+    ```
     cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10,  (frame_width,frame_height)) 
     ```
   5. Initialize a loop with a return value to indicate if you have captured the video frames. To capture each frame, invoke the ```read()``` function:
@@ -129,11 +130,11 @@ To apply Laplacian edge detection, modify the following code sample:
 <br />
  
 
-## Step 3: Use the Haar Cascade Classifier to detect vehicles
+## Step 3: Use a Haar Cascade Classifier to detect vehicles
 
-**Run the vehicle detection algorithm:**
+**Detect vehicles in the frames and draw the boundary boxes:**
 
-  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```car.xml``` file as a parameter.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
+  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```car.xml``` file as an argument.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
     <br></p>
     ```
     car_cascade = cv2.CascadeClassifier('car.xml')
@@ -150,9 +151,52 @@ To apply Laplacian edge detection, modify the following code sample:
          cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
      ```
  
-You can access the complete code sample <a href="https://github.com/akltech/Vehicle-Detection/blob/b836e9383ba34d36bf3994b9ad38f19355a84dee/vehicle_detection_model.py6">on Github.</a>
+**Modify the code below to create your own vehicle detection program:**
 
-##  Common Errors 
+    ```
+    import cv2
+    import datetime
+    cap = cv2.VideoCapture('C:/detect2/samplevideo.mp4')
+    # Modify the frame resolution 
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
+    # Export the video from each run 
+    out = cv2.VideoWriter(f'C:/CV/test{datetime.date.today()}.mp4',cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
+
+    while True:
+    # Capture each frame of the video
+        ret, frame = cap.read()
+        if ret:    
+
+            # Apply a gaussian blur to the frames
+            frame = cv2.GaussianBlur(frame, (5, 5), 0)
+            # Apply dilation to the frames
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # Apply laplacian edge detection to convert frames to binary  format
+            frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
+
+            # Feed the pretrained model to the classifier
+            car_cascade = cv2.CascadeClassifier('C:/detect2/car.xml')
+            # Detect objects of different sizes from your input video 
+            # and return a list of rectangles
+            cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+            # Read the list of rectangles to draw rectangle boundaries 
+            # around the cars in each frame
+            for (x, y, w, h) in cars:
+                cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
+
+            cv2.imshow("frame", frame)
+            out.write(frame)
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
+        else:
+            break
+            
+    cap.release()
+    cv2.destroyAllWindows()
+    ```
+
+## Common Errors 
 
 This section lists errors common to the openCV-Python API.
 
