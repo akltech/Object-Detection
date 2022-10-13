@@ -85,18 +85,18 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
     out.write(frame)
     ```
-  8. Call the ```waitKey()``` function to process OpenCV's HighGUI event messages. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
+  8. To process OpenCV's HighGUI event messages, invoke the ```waitKey()``` function. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
 <br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
     ```
     
-  9. Use the ```release()``` function to close all frames. This function closes the video capture object. 
+  9. Close the video capture object and all frames by executing the ```release()``` function.
   <br></p>
     ```
     cap.release()
     ```
-  10. To destroy the GUI window, call the ```destroyAllWindows()``` method. Usually, the GUI window will close when the program terminates, but if you are executing it in Python from the terminal rather than a script, it can remain open until you quit Python. Calling ```destroyAllWindows()```  is a good practice to prevent an open GUI window from lingering.
+  10. Destroy the GUI window by calling the ```destroyAllWindows()``` method. The GUI window will usually close when the program terminates, but if you are executing it in Python from the terminal rather than a script, it can remain open until you quit Python. Calling ```destroyAllWindows()```  is a good practice to prevent an open GUI window from lingering.
   <br></p>
     ```
     cv2.destroyAllWindows()
@@ -104,19 +104,23 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     
 ## Step 2: Apply image preprocessing techniques
 
-To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For information about image preprocessing functions in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+To better detect objects in an image, you must process the image before feeding it to the detection algorithm. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For more information about image preprocessing methods in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
 
 **Apply image filtering:**
 
-  1. Use the function ```GaussianBlur()``` to apply the Gaussian blur. Enter your source image, and width and height dimensions for the kernel size. The kernel size is used to determine the intensity of the applied effects. The blurring effect will increase or decrease with the kernel dimensions.
+  1. Blur each frame with the ``` GausianBlur()``` method.
+The intensity of the blur depends on the kernel size; the more significant the kernel size, the more intense the blur effect.
   ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
   
-  2. Apply dilation to accentuate features and further blur the image with ```Dilate()```.
+  2. Accentuate the features of each frame and further blur the image by calling the ```Dilate()``` function.
   ```cv2.Dilate(frame, (5,5), 2)```
   
-  3. ```cvtColor()``` method changes the color space of an image. You can convert each of the frames to a gray scale by using the space transformation technique ```BGR GRAY```
+  3. Convert the frames to grayscale using the ``cvtColor()``` method.  Color is usually not helpful in identifying features such as edges in computer vision applications. Though, there are exclusions. For example,  if you want to detect objects of a specific color, such as red cars on a gray highway, you need information about the colors. Because the colors on the vehicles in the sample video vary greatly, you will convert the images to grayscale.
+    <br></p>
+OpenCV-Python provides color conversion codes or flags for converting images to different color spaces. For BGR to gray conversion, input the flag ```BGR2GRAY```  to the ```cvtColor()``` function, as shown in the following code. For a list of color conversion codes, see <a href="https://docs.opencv.org/4.x/df/d9d/tutorial_py_colorspaces.html/." target="_blank">Changing Colorspaces.</a>
+   <br></p>
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
-
+  
   4. Optional: Convert the video to binary format by calling the ```Laplacian()``` method. A binary image usually consists of only two pixels, usually black and white. This way, the computer can more accurately identify the objects. 
    <br></p>
 The ```Laplacian()``` method is an edge detection algorithm that returns a binary image. Sudden changes in pixel intensity result in black and white egde pixels. An image's Laplacian highlights areas where the pixel intensity changes rapidly, making it an excellent method to call for identifying edges in a video. For more information about ```Laplacian()```, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
@@ -143,18 +147,20 @@ To apply Laplacian edge detection, modify the following code sample:
     car_cascade = cv2.CascadeClassifier('car.xml')
     ```
   
-  2. To detect objects of different sizes in the input video, call the ```detectMultiScale()``` function.
+  2. Detect objects of different sizes in each frame and return a list of rectangles by calling the ```detectMultiScale()``` method. The list of rectangles will be processed in the next step to draw the boundary boxes. 
+<br></p>
+    ```
+    cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+    ```
   
-  3. Call the ```rectangle()`` function to to read from the list of rectangles to draw boundary boxes around the cars.
+  3. Draw rectangles or boundary boxes around the vehicles by applying the ```rectangle()`` function. The function uses the points collected in the previous line of code to print rectangle outlines on the cars in each frame. 
     <br></p>
      ```
-     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
-        
      for (x, y, w, h) in cars:
          cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
      ```
  
-**Modify the code below to create your own vehicle detection program:**
+**Modify the following code sample to create a vehicle detection program:**
 
     import cv2
     import datetime
