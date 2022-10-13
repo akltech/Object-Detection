@@ -44,20 +44,20 @@ To load, view, and write a video, follow these steps:
 
   2. OpenCV’s HighGUI allows you to load a video from your file system by calling the ```VideoCapture()``` method. You can pass a parameter to ```VideoCapture()``` to tell it to capture a file from your computer or through a webcam. Though in this tutorial you will enter a file path or filename as an argument, you can typically pass in zero as a parameter to retrieve your computer’s webcam feed–for example, ```VideoCapture(0)```. 
   <br></p>
-The following code sample shows how to use the ```VideoCapture()``` method to load a video from a file. For information about other methods, see [cv Namespace Reference.](https://docs.opencv.org/4.x/d2/d75/namespacecv.html)
+The following code sample shows how to use the ```VideoCapture()``` method to load a video from a file. For information about other methods, see <a href="https://docs.opencv.org/4.x/d2/d75/namespacecv.html" target="_blank">cv Namespace Reference.</a>
 <br></p>
     ```
     cap = cv2.VideoCapture('video path')
     ```
   3. Set the output video's frame size by calling the ``` get()``` method. To obtain the default resolution of the frames in a video stream, you can pass an enumerator as a parameter to the ``` get()``` method--for example, ```CAP_PROP_FRAME_WIDTH```. The default resolutions of your system will apply. 
     <br></p>
-Alternatively, you can modify your output video's frame size by passing a number as a parameter to the ```get()``` method, as follows in the code sample below. For more information about other enumerators, see [Enumerations.](https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html) 
+Alternatively, you can modify your output video's frame size by passing a number as a parameter to the ```get()``` method, as follows in the code sample below. For more information about other enumerators, see <a href="https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html" target="_blank">Enumerations.</a>
   <br></p>
     ```
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     ```
-  4. To create a video file, make an instance of the ``` VideoWriter()``` class. The first parameter is the filename or the path to the output video file. Next, you must provide the fourcc codec, a four-character code. A codec is a hardware or software that compresses or decompresses a digital video–for example, you can compress an MP4 with the MPEG4 codec```mp4v```. This way, the output video frames will be compressed to a smaller file size suitable for viewing from your directory. To view a list of fourcc codes, see [Video FOURCCs.](https://learn.microsoft.com/en-us/windows/win32/medfound/video-fourccs)
+  4. To create a video file, make an instance of the ``` VideoWriter()``` class. The first parameter is the filename or the path to the output video file. Next, you must provide the fourcc codec, a four-character code. A codec is a hardware or software that compresses or decompresses a digital video–for example, you can compress an MP4 with the MPEG4 codec```mp4v```. This way, the output video frames will be compressed to a smaller file size suitable for viewing from your directory. To view a list of fourcc codes, see <a href="https://learn.microsoft.com/en-us/windows/win32/medfound/video-fourccs" target="_blank">Video FOURCCs.</a>
   <br></p>
 The final parameters of this method are, respectively, the output video's FPS (frames per second) and the size of the output video. Setting a framerate that is too fast or slow will interfere with your detection algorithm's accuracy. A good starting point for the FPS is ten seconds. The following code sample shows how to call the ``` VideoWriter()``` method to write a video file in a given directory with today’s date:
   <br></p>
@@ -103,7 +103,7 @@ The final parameters of this method are, respectively, the output video's FPS (f
 
 To better detect objects in an image, you must process the image before feeding it to the detection algorithm or the Haar Cascades classifier. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For information about image preprocessing functions in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
 
-**To apply image preprocessing techniques**
+**Apply image preprocessing techniques:**
 
   1. Use the function ```GaussianBlur()``` to apply the Gaussian blur. Enter your source image, and width and height dimensions for the kernel size. The kernel size is used to determine the intensity of the applied effects. The blurring effect will increase or decrease with the kernel dimensions.
   ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
@@ -114,45 +114,43 @@ To better detect objects in an image, you must process the image before feeding 
   3. ```cvtColor()``` method changes the color space of an image. You can convert each of the frames to a gray scale by using the space transformation technique ```BGR GRAY```
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
 
-  4. (Optional) Most computer vision programs convert the image to binary format before feeding it to a machine learning algorithm. A binary image consists of pixels with only one or two colors, usually black and white. In computer vision, edge detection is one of the standard methods for converting an image to binary format by producing the edges and curves of an image in white on a black background. The easiest and most effective way to apply edge detection to a video is by using Laplacian edge detection, a method in the OpenCV library. An image's Laplacian highlights areas where the intensity changes rapidly, making Laplacian edge detection ideal for converting video to binary.
-  Use the ```Laplacian``` method to apply edge detection to your video.
-  ```
-  frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
-  ```
+  4. Optional: Convert the video to binary format by calling the ```Laplacian()``` method. A binary image usually consists of only two pixels, usually black and white. This way, the computer can more accurately identify the objects. 
+   <br></p>
+The ```Laplacian()``` method is an edge detection algorithm that returns a binary image. Sudden changes in pixel intensity result in black and white egde pixels. An image's Laplacian highlights areas where the pixel intensity changes rapidly, making it an excellent method to call for identifying edges in a video. For more information about ```Laplacian()```, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
+  <br></p>
+To apply Laplacian edge detection, modify the following code sample:
+    <br></p>
+    ```
+    frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
+    ```
   <br />
-<p align="center">
   <img width="440" height="430" src="Laplacian_edge_detection.jpg">
 </p>
 <br />
-<p align="center">
-Laplacian Edge Detection of a highway. 
-</p>
-<br />
+ 
 
 ## Step 3: Use the Haar Cascade Classifier to detect vehicles
 
-After preprocessing the frames, use pre-trained Haar cascade models to detect cars in a video.
+**Run the vehicle detection algorithm:**
 
-**To run the detection algorithm**
-
-  1. Read the necessary XML file, car.xml, using the ```CascadeClassifier``` method. 
-  ```
-  # the classifier reads the pretrained model
-        car_cascade = cv2.CascadeClassifier('car.xml')
-  ```
+  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```car.xml``` file as a parameter.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
+    <br></p>
+    ```
+    car_cascade = cv2.CascadeClassifier('car.xml')
+    ```
   
-  2. Use the ```detectMultiScale()``` to detect the vehicles. ```detectMultiScale()``` detects objects of different sizes in our input video and returns the detected objects as a list of rectangles. 
-  The ```rectangle()`` method reads from list of rectangles that you processed from our video to draw rectangles around the cars.
-  ```
-        # detects objects of different sizes from our input video and outputs list of rectangles
-        cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+  2. To detect objects of different sizes in the input video, call the ```detectMultiScale()``` function.
+  
+  3. Call the ```rectangle()`` function to to read from the list of rectangles to draw boundary boxes around the cars.
+    <br></p>
+     ```
+     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
         
-        # reads the list of rectangles to draw rectangle boundaries in each frame
-        for (x, y, w, h) in cars:
-            cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
-  ```
+     for (x, y, w, h) in cars:
+         cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
+     ```
  
-Access the complete code [here.](https://github.com/akltech/Vehicle-Detection/blob/b836e9383ba34d36bf3994b9ad38f19355a84dee/vehicle_detection_model.py)
+You can access the complete code sample <a href="https://github.com/akltech/Vehicle-Detection/blob/b836e9383ba34d36bf3994b9ad38f19355a84dee/vehicle_detection_model.py6">on Github.</a>
 
 ##  Common Errors 
 
@@ -178,7 +176,6 @@ Ensure that you have ```opencv-contrib-python``` installed. Return to [Before yo
 
 <br />
 <br />
-<p align="center">
   <img width="450" height="440" src="https://github.com/akltech/Vehicle-Detection/blob/d487f0d26100899e4b5cb21a5bea76590978627d/detectionscreenshot.JPG">
 </p>
 
