@@ -82,7 +82,7 @@ The final parameters of this method are, respectively, the output video's FPS (f
     ```
     out.write(frame)
     ```
-  8. Pass the ```waitkey()``` method a parameter to tell it the number of milliseconds to wait for a pressed key to close the window. The ```waitKey()``` method is when OpenCV's HighGUI event messages are processed–for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, "'waitKey()"' returns instantly with key input. The code sample that follows shows how to call the ```waitKey()``` method to exit a loop with a keyboard event after twenty-five seconds:
+  8. Call the ```waitKey()``` function to process OpenCV's HighGUI event messages. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to process a video, as shown in the following code sample:
   <br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
