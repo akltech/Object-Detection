@@ -137,14 +137,9 @@ To apply Laplacian edge detection, modify the following code sample:
 <br />
  
 
-## Step 3: Use a Haar Cascade Classifier to detect vehicles
-* classify 
-* detect/locate coordinates
-* draw rectangles or the bounding boxes using these coordiantes (provide picture)
+## Step 3: Use the Haar Cascade classifier to detect vehicles
 
---> you included pre descriptions in the first and second steps. here explain what object detection is, how the haar cascade classifier works.
-
-**Detect vehicles in the frames and draw the boundary boxes:**
+**Draw bounding rectangles around each car:**
 
   1. To classify what objects are cars, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
     <br></p>
@@ -152,7 +147,7 @@ To apply Laplacian edge detection, modify the following code sample:
     car_cascade = cv2.CascadeClassifier('cars.xml')
     ```
   
-  2. Now that you have a method for classifying the cars, localize the cars and define the coordinates of the bounding boxes or rectangles positioned on each car. The ```detectMultiScale``` method will detect object of different sizes in each frame and return a list of rectangle coordinates as ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```. 
+  2. Now that you have a method for classifying the cars locate them and find the coordinates of rectangles positioned on each vehicle, or bounding box. The ```detectMultiScale``` method will detect objects of different sizes in each frame and return their bounding boxes a list of coordinates: ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```.  
   <br></p>
 In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)``` from each grayscaled frame.
 <br></p>
