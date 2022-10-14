@@ -138,22 +138,29 @@ To apply Laplacian edge detection, modify the following code sample:
  
 
 ## Step 3: Use a Haar Cascade Classifier to detect vehicles
+* classify 
+* detect/locate coordinates
+* draw rectangles or the bounding boxes using these coordiantes (provide picture)
+
+--> you included pre descriptions in the first and second steps. here explain what object detection is, how the haar cascade classifier works.
 
 **Detect vehicles in the frames and draw the boundary boxes:**
 
-  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```cars.xml``` file as an argument.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
+  1. To classify what objects are cars, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
     <br></p>
     ```
     car_cascade = cv2.CascadeClassifier('cars.xml')
     ```
   
-  2. Detect objects of different sizes in each frame and return a list of rectangles by calling the ```detectMultiScale()``` method. The list of rectangles will be processed in the next step to draw the boundary boxes. 
+  2. Now that you have a method for classifying the cars, localize the cars and define the coordinates of the bounding boxes or rectangles positioned on each car. The ```detectMultiScale``` method will detect object of different sizes in each frame and return a list of rectangle coordinates as ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```. 
+  <br></p>
+In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)``` from each grayscaled frame.
 <br></p>
     ```
     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
     ```
   
-  3. Draw rectangles or boundary boxes around the vehicles by applying the ```rectangle()`` function. The function uses the points collected in the previous line of code to print rectangle outlines on the cars in each frame. 
+  3. Draw the bounding boxes of the cars on each frame by calling the ```rectangle()``` function. For every ```(x,y,w,h)``` coordinate found with the ```detectMultiScale()``` method, the ```rectangle()``` function will print a rectangle. 
     <br></p>
      ```
      for (x, y, w, h) in cars:
