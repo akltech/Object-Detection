@@ -1,6 +1,6 @@
 # Create an OpenCV Program for Vehicle Detection in a Video 
 
-This tutorial provides a hands-on, step-by-step introduction to object detection using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
+This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
 
 ## Objectives
 
@@ -17,22 +17,21 @@ This tutorial provides a hands-on, step-by-step introduction to object detection
 
 ## Requirements
 
-OpenCV and Python are required to run the code sample locally. If you are on Windows and do not already have OpenCV installed see <a href="https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb" target="_blank">Installing OpenCV for Python.</a>
-Familiarity with computer vision and machine learning terms is helpful but not required. 
+OpenCV and Python are required to run the code sample locally. If you are on Windows and do not already have OpenCV installed see <a href="https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb" target="_blank">Installing OpenCV for Python.</a> Familiarity with computer vision and machine learning terms is helpful but not required. 
 
 
 ## Before you begin 
 
-* Install ```OpenCV-contrib```. The module contains cascade classifiers, the machine-learning algorithms for real-time object detection. In this tutorial, you will use the Haar Cascade classifiers. If you installed OpenCV-Python with Anaconda, you must install an additional module to retrieve them. 
+* Install ```OpenCV-contrib```. The package contains a Haar cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install contrib to retrieve the Cascades directory. 
   <br></p>
-To install OpenCV-contrib, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
+To install ```OpenCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
     ```
     pip install opencv-contrib-python
     ```
 
-*  Download the ```samplevideo.mp4``` file and the ```car.xml``` file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo.mp4``` file contains a sample input video. 
+*  Download the ```samplevideo.mp4``` file and the ```cars.xml``` file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo.mp4``` file contains a sample video from a highway surveillance camera.
 <br></p>
-The XML file contains a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. ```car.xml``` includes features classified as a car or non-car. This way, the algorithm training for vehicles is already complete. 
+The XML file is a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. The ```cars.xml``` file contains features classified as a car or non-car. 
 
 ## Step 1: Read, display and write a video.
 
@@ -67,7 +66,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10,  (frame_width,frame_height)) 
     ```
     
-  5. Initialize a loop with a return value to indicate if you have captured the video frames. To capture each frame, invoke the ```read()``` function:
+  5. Initialize a loop with a return value ```ret``` to indicate if you have captured the video frames. To read each frame, invoke the ```read()``` function.
  <br></p>
      ```
      while True:
@@ -75,17 +74,17 @@ The final parameters of this method are, respectively, frames per second (FPS) a
      if ret:
      ```
      
-  6. To display the video frames in the HighGUI window, call the ```imshow()``` method: 
+  6. Next, display the video frames in the HighGUI window using the ```imshow()``` method. 
   <br></p>
     ```
     cv2.imshow('frame', frame)
     ```
-  7. Pass the frames into the video file by calling the ```write()``` function: 
+  7. Pass the frames into the video file by calling the ```write()``` function.
   <br></p>
     ```
     out.write(frame)
     ```
-  8. To process OpenCV's HighGUI event messages, invoke the ```waitKey()``` function. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
+  8. To process OpenCV's HighGUI event messages, such as initilaizing the GUI window and closing it after timer invoke the ```waitKey()``` function. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
 <br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -142,10 +141,10 @@ To apply Laplacian edge detection, modify the following code sample:
 
 **Detect vehicles in the frames and draw the boundary boxes:**
 
-  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```car.xml``` file as an argument.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
+  1. To tell the classifier to read the pre-trained model for cars, call the ```CascadeClassifier()``` method and pass in the ```cars.xml``` file as an argument.  In the following code sample, the pre-trained model for cars is read using the ```CascadeClassifier()``` method.
     <br></p>
     ```
-    car_cascade = cv2.CascadeClassifier('car.xml')
+    car_cascade = cv2.CascadeClassifier('cars.xml')
     ```
   
   2. Detect objects of different sizes in each frame and return a list of rectangles by calling the ```detectMultiScale()``` method. The list of rectangles will be processed in the next step to draw the boundary boxes. 
@@ -182,8 +181,8 @@ To apply Laplacian edge detection, modify the following code sample:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
 
-            # Load the car.xml file into the classifier
-            car_cascade = cv2.CascadeClassifier('C:/cardetect/car.xml')
+            # Load the cars.xml file into the classifier
+            car_cascade = cv2.CascadeClassifier('C:/cardetect/cars.xml')
             # Detect objects of different sizes in each frame 
             # and return a list of rectangles
             cars = car_cascade.detectMultiScale(gray, 1.1, 1)
