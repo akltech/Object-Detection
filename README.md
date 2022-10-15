@@ -105,7 +105,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
 
 In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes its computer interpretability.
   <br></p>
-Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of boxes around the objects, as shown in the figure below. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1.
+Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of boxes around the objects, as shown in the figure below. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1:
 <br></p>
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
