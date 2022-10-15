@@ -151,7 +151,7 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-**Draw bounding rectangles around each car:**
+**Draw rectangles around each car:**
 
   1. To classify what objects are cars, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
     <br></p>
