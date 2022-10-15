@@ -22,7 +22,7 @@ OpenCV and Python are required to run the code sample locally. If you are on Win
 
 ## Before you begin 
 
-* Install ```OpenCV-contrib```. The package contains a Haar cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install contrib to retrieve the Cascades directory. 
+* Install ```OpenCV-contrib```. The contrib package contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install contrib to retrieve the Cascades directory. 
   <br></p>
 To install ```OpenCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
     ```
@@ -66,7 +66,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10,  (frame_width,frame_height)) 
     ```
     
-  5. Initialize a loop with a return value ```ret``` to indicate if you have captured the video frames. To read each frame, invoke the ```read()``` function.
+  5. Initialize a loop with the return value ```ret``` to indicate if you have captured the video frames. To read each frame, invoke the ```read()``` function.
  <br></p>
      ```
      while True:
@@ -84,7 +84,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
     out.write(frame)
     ```
-  8. To process OpenCV's HighGUI event messages, such as initilaizing the GUI window and closing it after timer invoke the ```waitKey()``` function. Pass this method a parameter to tell it the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
+  8. To process OpenCV's HighGUI event messages, such as initilaizing the GUI window and closing it after timer invoke the ```waitKey()``` function. Pass this method a parameter to signal the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
 <br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -103,12 +103,24 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     
 ## Step 2: Apply image preprocessing techniques
 
-To better detect objects in an image, you must process the image before feeding it to the detection algorithm. Applying techniques with OpenCV, such as gaussian blurring and dilation, reduces the algorithm's complexity. You will begin by applying a gaussian blur to reduce the noise level and smooth the image. For more information about image preprocessing methods in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes its computer interpretability.
+  <br></p>
+Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of boxes around the objects, as shown in the figure below. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1.
+<br></p>
+<p float="left">
+  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
+  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/result.jpg" width="300" /> 
+  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/blurred%20sky.jpg" width="300" />
+</p>
+Figure 1. The result of a noisy image of a sky, object detection on the noisy image, and noise removal with a blur filter.
+  <br></p>
+Image filters, such as blurring and dilation, will reduce the algorithm's complexity. The following steps are recommendations. Deviating from these steps is OK if it serves your input video better. For example, bilateral blurring is a common technique in computer vision to remove noise. For more information about image preprocessing functions, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+  <br></p>
 
-**Apply image filtering:**
+**Apply image filters:**
 
-  1. Blur each frame with the ``` GausianBlur()``` method.
-The intensity of the blur depends on the kernel size; the more significant the kernel size, the more intense the blur effect.
+  1. Blur the image with the ``` GausianBlur()``` method.
+The intensity of the blur depends on the kernel size; the more significant the kernel size, the more intense the blur effect. 
  <br></p>
   ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
   
@@ -132,7 +144,7 @@ To apply Laplacian edge detection, modify the following code sample:
     ```
   <br />
   <img width="440" height="430" src="Laplacian_edge_detection.jpg">
-  Figure 1. A highway surveillance video converted to binary format with Laplacian edge detection.
+  Figure 2. A highway surveillance video converted to binary format with Laplacian edge detection.
 </p>
 <br />
  
