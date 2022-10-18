@@ -35,21 +35,21 @@ The XML file is a pre-trained classifier for cars. Training refers to feeding th
 
 ## Step 1: Read, display and write a video.
 
-OpenCV's HighGUI API provides methods to access your computer hardware and file system and display video streams in the High-level GUI (Graphical User Interface). A GUI allows you to interact with a computer system through visual graphics, such as clickable file icons on a Windows OS. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
+OpenCV's HighGUI API lets you read and write video files and play videos in the High-level GUI. A GUI (Graphical User Interface) allows you to interact with a computer system through graphical icons, such as folder icons on a Windows desktop. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
 
-**To load, view, and write a video, follow these steps:**
+**To capture videos from a file, play videos, and write videos, follow these steps:**
 
   1. Import the dependencies: ```cv2``` and ```datetime```
 
-  2. To capture a video from your file system, call the ```VideoCapture()``` method. Pass a parameter to this method to capture a video file or a camera on your computer. For example, you can usually input ```0``` as an argument to retrieve your webcam feed. The following code sample shows how to use the ```VideoCapture()``` method to capture a video from your file system:
+  2. To capture a video from your file system, call the ```VideoCapture()``` method. This method takes a video file path or an integrated camera as a parameter. For example, you can usually pass ```0``` as an argument to capture your webcam feed. The following code sample shows how to use the ```VideoCapture()``` method to load a video from your file system:
   <br></p>
     ```
     cap = cv2.VideoCapture('video path')
     ```
-    
-  3. Set the output video's frame size by calling the ``` get()``` method. To obtain the default resolution of the frames in a video stream, you can pass an enumerator as a parameter to the ``` get()``` method--for example, ```CAP_PROP_FRAME_WIDTH```. The default resolutions of your system will apply. 
+ 
+  3. Define the height and width of the output video by calling the ``` get()``` method. To set the resolution of your frames, pass an enumerator as a parameter to the ``` get()``` method. For example, ```CAP_PROP_FRAME_WIDTH``` will return the width of the video file. The default resolutions will depend on your system. For more information on enumerators in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html" target="_blank">Enumerations.</a>
     <br></p>
-Alternatively, you can modify your output video's frame size by passing a number as a parameter to the ```get()``` method, as follows in the code sample below. For more information about other enumerators, see <a href="https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html" target="_blank">Enumerations.</a>
+Alternatively, you can get the default frame size by passing a number as an argument to this method:
 <br></p>
      ```
      frame_width = int(cap.get(3))
@@ -84,10 +84,13 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
     out.write(frame)
     ```
-  8. To process OpenCV's HighGUI event messages, such as initilaizing the GUI window and closing it after timer invoke the ```waitKey()``` function. Pass this method a parameter to signal the number of milliseconds to wait to close the window—for example, ```waitKey(20)``` waits up to twenty milliseconds to stop processing the GUI events. Regardless of the timeout value, ```waitKey()``` returns instantly with key input. However, an additional condition is required to stop a video with a key event, as shown in the following code sample:
-<br></p>
+  8. To process the GUI events, you must call the ```waitKey()``` method. The GUI will not display the video or react to keyboard input unless the event messages are processed. For example, ```waitKey(60)``` will suspend the program for sixty milliseconds or until a key press. Regardless of the given time, the window will close with keyboard input. 
+    <br></p>
+In some cases, an additional condition, such as a bit mask, is required to process videos when using OpenCV. In the following code sample, the while loop exits with a break after twenty-five milliseconds and a key press.
+   <br></p>
     ```
     if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
     ```
     
   9. Close the video capture object and all frames by executing the ```release()``` function.
@@ -151,15 +154,21 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-**Draw rectangles around each car:**
+<br></p>
+  <img width="500" height="230" src="Images/haarlikefeatures-example.png">
+  Figure 3. The edge of a car's front window can be detected using a haar like feature.
+</p>
+  <br></p>
 
-  1. To classify what objects are cars, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
+**Draw rectangular boxes around each car:**
+
+  1. To classify what objects are cars in your video, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
     <br></p>
     ```
     car_cascade = cv2.CascadeClassifier('cars.xml')
     ```
   
-  2. Now that you have a method for classifying the cars locate them and find the coordinates of rectangles positioned on each vehicle, or bounding box. The ```detectMultiScale``` method will detect objects of different sizes in each frame and return their bounding boxes a list of coordinates: ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```.  
+  2. Now that you have a method for classifying the cars, locate them and find the coordinates of rectangles positioned on each vehicle, or bounding box. The ```detectMultiScale``` method will detect objects of different sizes in each frame and return their bounding boxes a list of coordinates: ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```.  
   <br></p>
 In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)``` from each grayscaled frame.
 <br></p>
