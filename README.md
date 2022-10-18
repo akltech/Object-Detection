@@ -155,15 +155,22 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-<br></p>
+Cascade classifiers are machine learning classifiers based on Haar-like features. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
+    
+  
   <img width="500" height="330" src="Images/haarlikefeatures-example.png">
-  Figure 3. The edge of a car's front window can be detected using a haar like feature.
+  Figure 3. Two adjacent rectangles represent a Haar-like feature of a vehicle.
 </p>
+
+Cascading classifiers train with several hundred positive sample views of an object and random negative images of the same size. The classifier then determines the most informative regions in the images by using a test database of the object's positive and negative sample views. For example, a cascade classifier will determine the Haar-like features of cars by using a test database with cars and non-cars. 
   <br></p>
+These classifiers combine to form a cascade; cascades reduce the number of tests when it is clear that an image is not a car. Cascades use all information collected from the output from a given classifier as additional information for the next classifier in the cascade, which eventually forms a strong learner.
+
+You can find these cascades of Haar features for an object in an XML file, such as ```cars.xml```. 
 
 **Draw rectangular boxes around each car:**
 
-  1. To classify what objects are cars in your video, pass the ```cars.xml``` file, or the pre-trained model for cars, into the ```CascadeClassifier()``` method. 
+  1. To classify what objects are cars in your video, pass the ```cars.xml``` file into the ```CascadeClassifier()``` method. 
     <br></p>
     ```
     car_cascade = cv2.CascadeClassifier('cars.xml')
