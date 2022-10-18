@@ -155,7 +155,7 @@ To apply Laplacian edge detection, modify the following code sample:
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
 <br></p>
-  <img width="500" height="230" src="Images/haarlikefeatures-example.png">
+  <img width="500" height="330" src="Images/haarlikefeatures-example.png">
   Figure 3. The edge of a car's front window can be detected using a haar like feature.
 </p>
   <br></p>
