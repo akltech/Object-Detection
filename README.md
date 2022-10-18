@@ -87,11 +87,12 @@ The final parameters of this method are, respectively, frames per second (FPS) a
   8. To process the GUI events, you must call the ```waitKey()``` method. The GUI will not display the video or react to keyboard input unless the event messages are processed. For example, ```waitKey(60)``` will suspend the program for sixty milliseconds or until a key press. Regardless of the given time, the window will close with keyboard input. 
     <br></p>
 In some cases, an additional condition, such as a bit mask, is required to process videos when using OpenCV. In the following code sample, the while loop exits with a break after twenty-five milliseconds and a key press.
-   <br></p>
-    ```
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
-    ```
+<br></p>
+     ```
+     if cv2.waitKey(25) & 0xFF == ord('q'):
+         break
+     ```
+    
     
   9. Close the video capture object and all frames by executing the ```release()``` function.
   <br></p>
@@ -170,12 +171,12 @@ To apply Laplacian edge detection, modify the following code sample:
   
   2. Now that you have a method for classifying the cars, locate them and find the coordinates of rectangles positioned on each vehicle, or bounding box. The ```detectMultiScale``` method will detect objects of different sizes in each frame and return their bounding boxes a list of coordinates: ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```.  
   <br></p>
-In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)``` from each grayscaled frame.
+    In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)```.
 <br></p>
     ```
     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
     ```
-  
+   <br></p> 
   3. Draw the bounding boxes of the cars on each frame by calling the ```rectangle()``` function. For every ```(x,y,w,h)``` coordinate found with the ```detectMultiScale()``` method, the ```rectangle()``` function will print a rectangle. 
     <br></p>
      ```
