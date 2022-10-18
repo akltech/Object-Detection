@@ -136,9 +136,9 @@ OpenCV-Python provides color conversion codes or flags for converting images to 
    <br></p>
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
   
-  4. Optional: Convert the video to binary format by calling the ```Laplacian()``` method. A binary image usually consists of only two pixels, usually black and white. This way, the computer can more accurately identify the objects. 
+  4. Optional: Convert the video to binary format by calling the ```Laplacian()``` method. A binary image usually consists of only two pixels, typically black and white. This way, the computer can sometimes more accurately detect objects. 
    <br></p>
-The ```Laplacian()``` method is an edge detection algorithm that returns a binary image. Sudden changes in pixel intensity result in black and white egde pixels. An image's Laplacian highlights areas where the pixel intensity changes rapidly, making it an excellent method to call for identifying edges in a video. For more information about ```Laplacian()```, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
+The ```Laplacian()``` method is an edge detection algorithm that returns a binary image. Sudden changes in pixel intensity result in the formation of an edge. Typically, black pixels form a background, and white pixels form the edges. An image's Laplacian highlights areas where the pixel intensity changes rapidly, making Laplacian edge detection an excellent method for edge detection with videos.  For more information about the ```Laplacian()``` function, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
   <br></p>
 To apply Laplacian edge detection, modify the following code sample:
     <br></p>
