@@ -107,9 +107,10 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes computer interpretability.
+In general, it's difficult for cascade classifiers to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
   <br></p>
-Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of the expected outlines around the objects. In figure 1, a noisy sky image resulted in poor object detection. However, in the blurry photo to the far right in figure 1, the clouds are more visible to the human eye and a computer.
+In figure 1, a noisy sky image resulted in poor object detection; instead of boxes around the clouds, the algorithm detected the noise. More accurate detection will occur by removing the noise with a blur filter, as shown in the last photo of figure 1.  
+
 <br></p>
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
@@ -118,7 +119,7 @@ Noise is random brightness or color in an image; it results from light in an ima
 </p>
 Figure 1. The result of a noisy image of a sky, object detection on the noisy image, and noise removal with a blur filter.
   <br></p>
-The following steps are recommendations. Deviating from these steps is OK; experimenting with image filters is integral to computer vision. For example, you may try bilateral blurring to remove noise. For more information about image preprocessing functions, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+The following steps are recommendations. Deviating from these steps and applying other image filters is OK. However, Overly blurring the image can result in poor detection as well. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
   <br></p>
 
 **Apply image filters:**
