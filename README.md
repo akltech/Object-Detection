@@ -35,7 +35,7 @@ The XML file is a pre-trained classifier for cars. Training refers to feeding th
 
 ## Step 1: Read, display and write a video.
 
-OpenCV's HighGUI API lets you read and write video files and play videos in the High-level GUI. A GUI (Graphical User Interface) allows you to interact with a computer system through graphical icons, such as folder icons on a Windows desktop. With the HighGUI module, you can read and write videos into a given directory and view them in real time.
+OpenCV's HighGUI API lets you read and write files and play videos in the High-level GUI. A GUI (Graphical User Interface) allows you to interact with a computer system through graphical icons, such as the folder icons on a Windows desktop. With the HighGUI module, you can load your detection videos into a given directory and view them in real-time.
 
 **To capture videos from a file, play videos, and write videos, follow these steps:**
 
@@ -99,7 +99,7 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     ```
     cap.release()
     ```
-  10. Destroy the GUI window by calling the ```destroyAllWindows()``` method. The GUI window will usually close when the program terminates, but if you are executing it in Python from the terminal rather than a script, it can remain open until you quit Python. Calling ```destroyAllWindows()```  is a good practice to prevent an open GUI window from lingering.
+  10. Destroy the GUI window by calling the ```destroyAllWindows()``` method. The GUI window will usually close when the program terminates, but if you are executing it in Python from a terminal rather than a script, it can remain open until you quit Python. Calling ```destroyAllWindows()```  is a good practice to prevent an open GUI window from lingering.
   <br></p>
     ```
     cv2.destroyAllWindows()
@@ -107,9 +107,9 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes its computer interpretability.
+In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes computer interpretability.
   <br></p>
-Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of the expected box outlines around the objects, as shown in figure 1. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1:
+Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of the expected outlines around the objects. In figure 1, a noisy sky image resulted in poor object detection. However, in the blurry photo to the far right in figure 1, the clouds are more visible to the human eye and a computer.
 <br></p>
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
@@ -118,7 +118,7 @@ Noise is random brightness or color in an image; it results from light in an ima
 </p>
 Figure 1. The result of a noisy image of a sky, object detection on the noisy image, and noise removal with a blur filter.
   <br></p>
-Image filters, such as blurring and dilation, will reduce the algorithm's complexity. The following steps are recommendations. Deviating from these steps is OK if it serves your input video better. For example, bilateral blurring is a common technique in computer vision to remove noise. For more information about image preprocessing functions, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+The following steps are recommendations. Deviating from these steps is OK; experimenting with image filters is integral to computer vision. For example, you may try bilateral blurring to remove noise. For more information about image preprocessing functions, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
   <br></p>
 
 **Apply image filters:**
@@ -155,16 +155,16 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-Cascade classifiers are machine learning classifiers based on Haar-like features. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
+Cascade classifiers are machine learning classifiers based on Haar-like features, or common features found in an object. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference.  In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
     
   
   <img width="500" height="330" src="Images/haarlikefeatures-example.png">
   Figure 3. Two adjacent rectangles represent a Haar-like feature of a vehicle.
 </p>
 
-Cascading classifiers train with several hundred positive sample views of an object and random negative images of the same size. The classifier then determines the most informative regions in the images by using a test database of the object's positive and negative sample views. For example, a cascade classifier will determine the Haar-like features of cars by using a test database with cars and non-cars. 
+Cascading classifiers train with several hundred positive sample views of an object and random negative images of the same size. The classifier then determines the most informative regions in the images by using a test database of positive and negative sample views. For example, a cascade classifier will determine the Haar-like features of cars by using a test database with cars and non-cars. 
   <br></p>
-These classifiers combine to form a cascade; cascades reduce the number of tests when it is clear that an image is not a car. Cascades use all information collected from the output from a given classifier as additional information for the next classifier in the cascade, which eventually forms a strong learner.
+These classifiers combine to form a cascade. Cascades use all information collected from the output from a given classifier as additional information for the next classifier in the cascade, which eventually forms a strong learner. This way, cascades reduce the number of tests when it is clear that an image is not a car. 
 
 You can find these cascades of Haar features for an object in an XML file, such as ```cars.xml```. 
 
