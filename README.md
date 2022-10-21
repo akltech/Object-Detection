@@ -1,6 +1,6 @@
 # Create an OpenCV Program for Vehicle Detection in a Video 
 
-This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of OpenCV, a computer vision library. To create a vehicle detection program, complete the following steps:
+This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of the computer vision library OpenCV. To create a vehicle detection program, complete the following steps:
 
 ## Objectives
 
@@ -86,7 +86,7 @@ The final parameters of this method are, respectively, frames per second (FPS) a
     ```
   8. To process the GUI events, you must call the ```waitKey()``` method. The GUI will not display the video or react to keyboard input unless the event messages are processed. For example, ```waitKey(60)``` will suspend the program for sixty milliseconds or until a key press. Regardless of the given time, the window will close with keyboard input. 
     <br></p>
-In some cases, an additional condition, such as a bit mask, is required to process videos when using OpenCV. In the following code sample, the while loop exits with a break after twenty-five milliseconds and a key press.
+In most cases, an additional condition, such as a bit mask, is required to process videos when using OpenCV. In the following code sample, the GUI closes, and the while loop exits with a break after waiting for twenty-five milliseconds and then for a keyboard press.
 <br></p>
      ```
      if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -109,7 +109,7 @@ In some cases, an additional condition, such as a bit mask, is required to proce
 
 In general, it's difficult for computers to detect shapes in a noisy image. For this reason, blurring an image changes its computer interpretability.
   <br></p>
-Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of boxes around the objects, as shown in the figure below. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1:
+Noise is random brightness or color in an image; it results from light in an image that the camera cannot interpret. When an object detection method takes a noisy image as input, the result is scattered points across the frame instead of the expected box outlines around the objects, as shown in figure 1. A machine learning algorithm trained to detect clouds would succeed better with the blurred snapshot in figure 1:
 <br></p>
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
@@ -137,9 +137,9 @@ OpenCV-Python provides color conversion codes or flags for converting images to 
    <br></p>
   ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
   
-  4. Optional: Convert the video to binary format by calling the ```Laplacian()``` method. A binary image usually consists of only two pixels, typically black and white. This way, the computer can sometimes more accurately detect objects. 
+  4. Optional: After you apply blurring filters to remove noise, convert the video to binary format by calling the ```Laplacian()``` method. A binary image consists of only two-pixel colors, usually black and white. This technique makes it easier for computers to detect edges and, ultimately, the target objects in an image. Although in this tutorial, you will apply a grayscale filter to prepare the images for classification, binary image processing is a common technique in computer vision.
    <br></p>
-The ```Laplacian()``` method is an edge detection algorithm that returns a binary image. Sudden changes in pixel intensity result in the formation of an edge. Typically, black pixels form a background, and white pixels form the edges. An image's Laplacian highlights areas where the pixel intensity changes rapidly, making Laplacian edge detection an excellent method for edge detection with videos.  For more information about the ```Laplacian()``` function, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
+An image's Laplacian highlights areas where the pixel intensity or brightness of the image changes rapidly, such as in the fast-moving frames of a video. Therefore, this type of edge detection is an ideal method for processing videos. This technique results in an image that looks like a pencil sketch of white pixels on a black background. For more information about the ```Laplacian()``` function, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
   <br></p>
 To apply Laplacian edge detection, modify the following code sample:
     <br></p>
