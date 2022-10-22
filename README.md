@@ -107,7 +107,7 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for cascade classifiers to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
+In general, it's difficult for Cascade Classifiers to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
   <br></p>
 In figure 1, a noisy sky image resulted in poor object detection; instead of boxes around the clouds, the algorithm detected the noise. More accurate detection will occur by removing the noise with a blur filter, as shown in the last photo of figure 1.  
 
@@ -156,7 +156,7 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-Cascade classifiers are machine learning classifiers based on Haar-like features, or common features found in an object. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference.  In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
+A Cascade Classifier is an object detection algorithm based on Haar-like features, or common features found in an object. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference.  In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
     
   
   <img width="500" height="330" src="Images/haarlikefeatures-example.png">
