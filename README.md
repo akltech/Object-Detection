@@ -109,9 +109,8 @@ In most cases, an additional condition, such as a bit mask, is required to proce
 
 In general, it's difficult for Cascade Classifiers to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
   <br></p>
-In figure 1, a noisy sky image resulted in poor object detection; instead of boxes around the clouds, the algorithm detected the noise. More accurate detection will occur by removing the noise with a blur filter, as shown in the last photo of figure 1.  
+In figure 1, a noisy sky image resulted in poor object detection; the algorithm detected the noise and failed to find the clouds. The detection will be more accurate when you remove the noise by blurring the image, such as in the last photo of figure 1.  
 
-<br></p>
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/result.jpg" width="300" /> 
@@ -140,7 +139,7 @@ OpenCV-Python provides color conversion codes or flags for converting images to 
   
   4. Optional: After you apply blurring filters to remove noise, convert the video to binary format by calling the ```Laplacian()``` method. A binary image consists of only two-pixel colors, usually black and white. This technique makes it easier for computers to detect edges and, ultimately, the target objects in an image. Although in this tutorial, you will apply a grayscale filter to prepare the images for classification, binary image processing is a common technique in computer vision.
    <br></p>
-An image's Laplacian highlights areas where the pixel intensity or brightness of the image changes rapidly, such as in the fast-moving frames of a video. Therefore, this type of edge detection is an ideal method for processing videos. This technique results in an image that looks like a pencil sketch of white pixels on a black background. For more information about the ```Laplacian()``` function, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html#gad78703e4c8fe703d479c1860d76429e6">Image Filtering.</a>
+An image's Laplacian highlights areas where the pixel intensity or brightness of the image changes rapidly, such as in the fast-moving frames of a video. Therefore, this type of edge detection is an ideal method for processing videos. This technique results in an image that looks like a pencil sketch of white pixels on a black background. For more information about the ```Laplacian()``` function, see <a href="https://github.com/akltech/Vehicle-Detection/blob/46307c825f0278b66932a2727e38cf4fed75cad8/Images/Laplacian_edge_detection.png">Image Filtering.</a>
   <br></p>
 To apply Laplacian edge detection, modify the following code sample:
     <br></p>
@@ -148,7 +147,7 @@ To apply Laplacian edge detection, modify the following code sample:
     frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
     ```
   <br />
-  <img width="440" height="430" src="Laplacian_edge_detection.jpg">
+  <img width="440" height="430" src="https://github.com/akltech/Vehicle-Detection/blob/46307c825f0278b66932a2727e38cf4fed75cad8/Images/Laplacian_edge_detection.png">
   Figure 2. A highway surveillance video converted to binary format with Laplacian edge detection.
 </p>
 <br />
@@ -156,18 +155,16 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-A Cascade Classifier is an object detection algorithm based on Haar-like features, or common features found in an object. For example, it is a common observation that among all vehicles, the region of the front window is darker than the region of the roof above it. In a detection window, a Haar-like feature looks at adjacent rectangular sections at a specific area, adds the pixel intensities in each section, and then calculates the difference between these sums. The subsections of the image are then divided into categories using this difference.  In figure 3, the rectangle regions of a car's front window are a Haar-like feature.
-    
-  
-  <img width="500" height="330" src="Images/haarlikefeatures-example.png">
+In the OpenCV library, the Cascade Classifier method can decide if an object is in an image, such as a car.
+  <br></p>
+Cascade classifiers are a series of tests run on hundreds of images, and each test checks if one part of an image is darker than its adjacent part. Positive images include the object you want to detect, such as cars, and the negative images are random or non-cars. The test database has samples of positive and negative images collected by developers.
+  <br></p> 
+Haar features are rectangular features. For example, if you want to find the cars in an image, you can collect the Haar features of cars with the Cascade Classifier. Haar features are universal patterns that you would find in an object. For example, all vehicles have a front window and a steering wheel. The classifier scans the entire image looking for regions where one part of the rectangle is darker than its adjacent part, such as a car's front window, as shown in figure 3.
+
+<img width="500" height="330" src="Images/haarlikefeatures-example.png">
   Figure 3. Two adjacent rectangles represent a Haar-like feature of a vehicle.
 </p>
 
-Cascading classifiers train with several hundred positive sample views of an object and random negative images of the same size. The classifier then determines the most informative regions in the images by using a test database of positive and negative sample views. For example, a cascade classifier will determine the Haar-like features of cars by using a test database with cars and non-cars. 
-  <br></p>
-These classifiers combine to form a cascade. Cascades use all information collected from the output from a given classifier as additional information for the next classifier in the cascade, which eventually forms a strong learner. This way, cascades reduce the number of tests when it is clear that an image is not a car. 
-
-You can find these cascades of Haar features for an object in an XML file, such as ```cars.xml```. 
 
 **Draw rectangular boxes around each car:**
 
