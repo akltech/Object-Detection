@@ -118,7 +118,7 @@ In figure 1, a noisy sky image resulted in poor object detection; the algorithm 
 </p>
 Figure 1. The result of a noisy image of a sky, object detection on the noisy image, and noise removal with a blur filter.
   <br></p>
-The following steps are recommendations. Deviating from these steps and applying other image filters is OK. However, Overly blurring the image can result in poor detection as well. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+The following steps are recommendations. Deviating from these steps and applying other image filters is OK. However, overly blurring the image can result in poor detection as well. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
   <br></p>
 
 **Apply image filters:**
@@ -155,7 +155,7 @@ To apply Laplacian edge detection, modify the following code sample:
 
 ## Step 3: Use the Haar Cascade classifier to detect vehicles
 
-In the OpenCV library, the Cascade Classifier method can decide if an object is in an image, such as a car.
+The Cascade Classifier is a program designed to learn how to detect objects in an image, such as cars, on its own.
   <br></p>
 Cascade classifiers are a series of tests run on hundreds of images, and each test checks if one part of an image is darker than its adjacent part. Positive images include the object you want to detect, such as cars, and the negative images are random or non-cars. The test database has samples of positive and negative images collected by developers.
   <br></p> 
