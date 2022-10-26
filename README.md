@@ -107,7 +107,7 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for Cascade Classifiers to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
+In general, it's difficult for object detection programs to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
   <br></p>
 In figure 1, a noisy sky image resulted in poor object detection; the algorithm detected the noise and failed to find the clouds. The detection will be more accurate when you remove the noise by blurring the image, such as in the last photo of figure 1.  
 
@@ -166,23 +166,25 @@ Haar features are rectangular features. For example, if you want to find the car
 </p>
 
 
-**Draw rectangular boxes around each car:**
+**Draw bounding boxes around each car:**
 
-  1. To classify what objects are cars in your video, pass the ```cars.xml``` file into the ```CascadeClassifier()``` method. 
+  1. To locate the cars in each frame, create a classifier by calling the ```CascadeClassifier()``` method and passing the ```cars.xml``` file as a parameter. The XML file contains Haar features of cars from a pre-trained classifier. 
+
     <br></p>
     ```
     car_cascade = cv2.CascadeClassifier('cars.xml')
     ```
   
-  2. Now that you have a method for classifying the cars, locate them and find the coordinates of rectangles positioned on each vehicle, or bounding box. The ```detectMultiScale``` method will detect objects of different sizes in each frame and return their bounding boxes a list of coordinates: ```(x,y,w,h)```. The top-left coordinate of the bounding box is stored as ```(x,y)``` and its width and height as ```(w,h)```.  
+  2. Return the location of each car using the ```detectMultiScale()``` method. In object detection, a bounding box usually describes the location of an object. The bounding box is rectangular and determined by the top-left coordinate of the rectangle as ```(x,y)``` and the width and height as ```(w,h)```.
   <br></p>
-    In the following code sample, ```cars``` stores the bounding box coordinates of each car as ```(x,y,w,h)```.
+    In the following code sample, the ```detectMultiScale()``` method returns the bounding box coordinates of each car as a list.
+
 <br></p>
     ```
     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
     ```
    <br></p> 
-  3. Draw the bounding boxes of the cars on each frame by calling the ```rectangle()``` function. For every ```(x,y,w,h)``` coordinate found with the ```detectMultiScale()``` method, the ```rectangle()``` function will print a rectangle. 
+  3. Draw the bounding boxes on each frame by calling the ```rectangle()``` function. For every ```(x,y,w,h)``` coordinate found with the ```detectMultiScale()``` method, the ```rectangle()``` function will print a rectangle. 
     <br></p>
      ```
      for (x, y, w, h) in cars:
