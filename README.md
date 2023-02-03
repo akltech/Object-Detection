@@ -1,6 +1,8 @@
-# Create an OpenCV Program for real-time Vehicle Detection  
+# Introduction to Object Detection with OpenCV-Python 
 
-This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of the computer vision library OpenCV. To create a program that finds and tracks vehicles in a video, complete the following steps:
+This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of the computer vision library OpenCV. The following includes code samples, a guide to installing the modules for the object detection algorithm used in this tutorial, and concept overviews. This article introduces OpenCV to people familiar with Python but with little or no experience with computer vision and machine learning algorithms.
+To create a program that finds and tracks vehicles in an image or video, complete the following steps:
+
 
 ## Objectives
 
@@ -17,12 +19,12 @@ This tutorial provides a step-by-step introduction to object detection using Ope
 
 ## Requirements
 
-OpenCV and Python are required to run the code sample locally. If you are on Windows and do not already have OpenCV installed see <a href="https://medium.com/@pranav.keyboard/installing-opencv-for-python-on-windows-using-anaconda-or-winpython-f24dd5c895eb" target="_blank">Installing OpenCV for Python.</a> Familiarity with computer vision and machine learning terms is helpful but not required. 
+OpenCV and Python are required to run the code sample. If you are on Windows and do not already have OpenCV installed, see Installing OpenCV for Python. Familiarity with computer vision and machine learning is helpful but not required.
 
 
 ## Before you begin 
 
-* Install ```OpenCV-contrib```. The contrib package contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install contrib to retrieve the Cascades directory. 
+* Install the ```OpenCV-contrib``` repository. The additional module contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install this extra module to access the Cascades directory.
   <br></p>
 To install ```OpenCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
     ```
@@ -31,11 +33,11 @@ To install ```OpenCV-contrib```, open the Anaconda prompt and use the ```pip``` 
 
 *  Download the ```samplevideo.mp4``` file and the ```cars.xml``` file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo.mp4``` file contains a sample video from a highway surveillance camera.
 <br></p>
-The XML file is a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data so that it can learn to detect specific objects. The ```cars.xml``` file contains features classified as a car or non-car. 
+The XML file is a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data to learn to detect specific objects. The ```cars.xml``` file contains features classified as a car or non-car. 
 
 ## Step 1: Read, display and write a video.
 
-OpenCV's HighGUI API lets you read and write files and play videos in the High-level GUI. A GUI (Graphical User Interface) allows you to interact with a computer system through graphical icons, such as the folder icons on a Windows desktop. With the HighGUI module, you can load your detection videos into a given directory and view them in real-time.
+OpenCV's HighGUI API lets you read and write files and play videos in the High-level GUI. With the HighGUI module, you can load your detection videos into a given directory and view them in real-time.
 
 **To capture videos from a file, play videos, and write videos, follow these steps:**
 
@@ -107,9 +109,9 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for object detection programs to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera cannot capture. For this reason, blurring a photo may improve detection accuracy.  
+In general, it's difficult for object detection programs to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera could not capture. For this reason, blurring an image may improve detection accuracy by reducing the noise.
   <br></p>
-In figure 1, a noisy sky image resulted in poor object detection; the algorithm detected the noise and failed to find the clouds. The detection will be more accurate when you remove the noise by blurring the image, such as in the last photo of figure 1.  
+In the first image in figure 1, the noise in the image of the sky resulted in poor object detection. Instead of locating the clouds, the algorithm detected the noise. The second image in figure 1 is an example of how noise can be seen instead of the desired object. In the last photo of figure 1, the detection algorithm’s accuracy improved after the image was blurred.
 
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
@@ -232,18 +234,3 @@ Haar features are rectangular features. For example, if you want to find the car
             
     cap.release()
     cv2.destroyAllWindows()
-
-## Common Errors 
-
-This section lists errors common to the OpenCV-Python API.
-
-**This item was encoded in a format that's not supported**
-
-One possible solution is to download the <a href="https://www.videolan.org/vlc/download-windows.html" target="_blank">VLC media player for Windows.</a>
-Then, right click on the video and go to ```Properties```, ```Change...```, and select ```VLC Media Player```
-
-<br />
-
-**SystemError: <class 'cv2.CascadeClassifier'> returned a result with an error set***
-  
-Ensure ```opencv-contrib-python``` is installed. Return to [Before you Begin](#before-you-begin) for installation instructions. 
