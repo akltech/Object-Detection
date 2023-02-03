@@ -14,19 +14,17 @@ To create a program that finds and tracks vehicles in an image or video, complet
 
   * [Step 3: Use a Haar Cascade Classifier to detect vehicles](#step-3-use-a-haar-cascade-classifier-to-detect-vehicles)
 
-  * [Common Errors](#common-errors)
-
 
 ## Requirements
 
-OpenCV and Python are required to run the code sample. If you are on Windows and do not already have OpenCV installed, see Installing OpenCV for Python. Familiarity with computer vision and machine learning is helpful but not required.
+This tutorial requires OpenCV and Python. If you are on Windows and do not already have OpenCV installed, see Installing OpenCV for Python. Familiarity with computer vision and machine learning is helpful but not required.
 
 
 ## Before you begin 
 
-* Install the ```OpenCV-contrib``` repository. The additional module contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install this extra module to access the Cascades directory.
+* Install the ```openCV-contrib``` module. The additional module contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install this extra module to access the Cascades directory.
   <br></p>
-To install ```OpenCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
+To install ```openCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
     ```
     pip install opencv-contrib-python
     ```
@@ -118,9 +116,9 @@ In the first image in figure 1, the noise in the image of the sky resulted in po
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/result.jpg" width="300" /> 
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/blurred%20sky.jpg" width="300" />
 </p>
-Figure 1. The result of a noisy image of a sky, object detection on the noisy image, and noise removal with a blur filter.
+Figure 1. Figure 1. Image noise in a photo of the sky; poor detection accuracy in a photo with a high amount of image noise; a blurred image that may improve detection accuracy.
   <br></p>
-The following steps are recommendations. Deviating from these steps and applying other image filters is OK. However, overly blurring the image can result in poor detection as well. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
+The following steps are recommendations. Deviating from these steps and applying other image filters is OK. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
   <br></p>
 
 **Apply image filters:**
