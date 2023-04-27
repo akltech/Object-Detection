@@ -12,7 +12,7 @@ To create a program that finds and tracks vehicles in an image or video, complet
 
   * [Step 2: Apply image preprocessing techniques](#step-2-apply-image-preprocessing-techniques)
 
-  * [Step 3: Use a Haar Cascade Classifier to detect vehicles](#step-3-use-a-haar-cascade-classifier-to-detect-vehicles)
+  * [Step 3: Use a Haar Cascade Classifier to detect vehicles](#step-3-use-the-haar-cascade-classifier-to-detect-vehicles)
 
 
 ## Requirements
