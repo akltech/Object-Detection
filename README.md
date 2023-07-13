@@ -107,9 +107,9 @@ In most cases, an additional condition, such as a bit mask, is required to proce
     
 ## Step 2: Apply image preprocessing techniques
 
-In general, it's difficult for object detection programs to detect shapes in noisy images. Noise is random brightness or color in an image; it results from light in an image that a camera could not capture. For this reason, blurring an image may improve detection accuracy by reducing the noise.
+Object detection algorithms can locate and mark target objects in an image, such as vehicles on a highway or clouds in the sky. Standard detection algorithms generally cannot find the target object if an image has a lot of noise. Noise is random brightness or color in an image that creates a grainy appearance similar to TV static. The result of too much noise in an image is the inability of the object detector to find the edges of the target image - which is needed to identify which areas of an image contain the target. The algorithm detects edges by finding pixels that contrast in darkness and light. Noise creates contrasting pixels across the image, which causes the detector to confuse random pixels scattered across an image as the target object. For this reason, blurring an image to remove the noise and lessen the contrast of pixels may improve detection abilities by making the distinction of edges more clear.
   <br></p>
-In the first image in figure 1, the noise in the image of the sky resulted in poor object detection. Instead of locating the clouds, the algorithm detected the noise. The second image in figure 1 is an example of how noise can be seen instead of the desired object. In the last photo of figure 1, the detection algorithm’s accuracy improved after the image was blurred.
+The first image in figure 1 represents image noise in a picture of the sky. In the second image in figure 1, many small red dots are scattered across the image -  the detection algorithm was obstructed by the noise in the visual and failed to mark the edges of the target object, clouds. The last image in the figure demonstrates a blurred image of the sky that would result in more accurate detection.
 
 <p float="left">
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
