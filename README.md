@@ -116,7 +116,7 @@ The first image in figure 1 represents image noise in a picture of the sky. In t
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/result.jpg" width="300" /> 
   <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/blurred%20sky.jpg" width="300" />
 </p>
-Figure 1. Figure 1. Image noise in a photo of the sky; poor detection accuracy in a photo with a high amount of image noise; a blurred image that may improve detection accuracy.
+Figure 1. Image noise in a photo of the sky; poor detection accuracy in a photo with a high amount of image noise; a blurred image that may improve detection accuracy.
   <br></p>
 The following steps are recommendations. Deviating from these steps and applying other image filters is OK. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
   <br></p>
