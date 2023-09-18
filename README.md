@@ -1,234 +1,460 @@
-# Introduction to Object Detection with OpenCV-Python 
+# Tutorial: Detect and track objects in real-time with OpenCV
 
-This tutorial provides a step-by-step introduction to object detection using OpenCV-Python, the Python API of the computer vision library OpenCV. The following includes code samples, a guide to installing the modules for the object detection algorithm used in this tutorial, and concept overviews. This article introduces OpenCV to people familiar with Python but with little or no experience with computer vision and machine learning algorithms.
-To create a program that finds and tracks vehicles in an image or video, complete the following steps:
-
-
-## Objectives
-
-  * [Before you Begin](#before-you-begin)
-
-  * [Step 1: Read, display, and write a video](#step-1-read-display-and-write-a-video)
-
-  * [Step 2: Apply image preprocessing techniques](#step-2-apply-image-preprocessing-techniques)
-
-  * [Step 3: Use a Haar Cascade Classifier to detect vehicles](#step-3-use-the-haar-cascade-classifier-to-detect-vehicles)
-
-
-## Requirements
-
-This tutorial requires OpenCV and Python. If you are on Windows and do not already have OpenCV installed, see Installing OpenCV for Python. Familiarity with computer vision and machine learning is helpful but not required.
-
-
-## Before you begin 
-
-* Install the ```openCV-contrib``` module. The additional module contains a Haar Cascade classifier, the object detection algorithm used in this tutorial. If you installed OpenCV-Python with Anaconda, you must install this extra module to access the Cascades directory.
-  <br></p>
-To install ```openCV-contrib```, open the Anaconda prompt and use the ```pip``` <a href="https://pypi.org/project/opencv-contrib-python/" target="_blank">command:</a>
-    ```
-    pip install opencv-contrib-python
-    ```
-
-*  Download the ```samplevideo.mp4``` file and the ```cars.xml``` file from <a href="https://github.com/akltech/Vehicle-Detection/blob/94c946f07dfba7fcd958893d59c074fbe26fe91a/Program%20Files" target="_blank">Program Files</a> into your code directory. The ```samplevideo.mp4``` file contains a sample video from a highway surveillance camera.
-<br></p>
-The XML file is a pre-trained classifier for cars. Training refers to feeding the machine learning algorithm data to learn to detect specific objects. The ```cars.xml``` file contains features classified as a car or non-car. 
-
-## Step 1: Read, display and write a video.
-
-OpenCV's HighGUI API lets you read and write files and play videos in the High-level GUI. With the HighGUI module, you can load your detection videos into a given directory and view them in real-time.
-
-**To capture videos from a file, play videos, and write videos, follow these steps:**
-
-  1. Import the dependencies: ```cv2``` and ```datetime```
-
-  2. To capture a video from your file system, call the ```VideoCapture()``` method. This method takes a video file path or an integrated camera as a parameter. For example, you can usually pass ```0``` as an argument to capture your webcam feed. The following code sample shows how to use the ```VideoCapture()``` method to load a video from your file system:
-  <br></p>
-    ```
-    cap = cv2.VideoCapture('video path')
-    ```
+OpenCV's Cascade Classifier is a machine learning framework for object detection. You can leverage a Cascade Classifier with a pretrained model to detect and track objects in real-time. A pretrained model can help you get started with your object detection program:
  
-  3. Define the height and width of the output video by calling the ``` get()``` method. To set the resolution of your frames, pass an enumerator as a parameter to the ``` get()``` method. For example, ```CAP_PROP_FRAME_WIDTH``` will return the width of the video file. The default resolutions will depend on your system. For more information on enumerators in OpenCV, see <a href="https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html" target="_blank">Enumerations.</a>
-    <br></p>
-Alternatively, you can get the default frame size by passing a number as an argument to this method:
-<br></p>
-     ```
-     frame_width = int(cap.get(3))
-     frame_height = int(cap.get(4))
-     ```
+- To detect an object of interest, researchers train classifiers on large datasets over long periods of time.
+When this process is complete, the classifier generates a pretrained model.
+- The pretrained model contains the features needed to detect an object. 
+
+### What you will learn
+
+- The fundamentals of object detection as they apply to OpenCV.
+- How to create an object detection program with OpenCV and Python.
+
+### Before you begin  
+
+- Install OpenCV and Python. For more information, view [Get Started](https://opencv.org/get-started/). 
+- Ensure that you have the pretrained models, or ```Cascade XML``` files in your **OpenCV directory**:
+  - Go to your **OpenCV directory** > Select the **data** folder > Select the **haarcascades** folder.
+  
+    The **haarcascades** folder contains ```Haar-Cascade XML``` files. These files are pretrained classifiers for different objects. For example, the ```haarcascade_eye.xml``` file is a classifier trained to detect eyes.
+
+> If you do not have the Haar Cascade files, you must install the openCV-contrib module. To install this module, run the command: ***pip install opencv-contrib-python*** 
+- Prepare an input video or image if you do not plan to use an integrated camera, like a web camera. In this tutorial, the input video is highway surveillance footage. To download the input video:
+    -  Go to [Program Files](https://github.com/akltech/Vehicle-Detection/tree/main/Program%20Files) > Download the ```samplevideo.mp4``` file.  <br><br>
+- Prepare or download a pretrained model or ```Haar-Cascade XML``` file. The classifier you choose depends on your application. 
     
-  4. To create a video file, make an instance of the ``` VideoWriter()``` class. The first parameter is the filename or the path to the output video file. Next, you must provide the fourcc codec, a four-character code. A codec is a hardware or software that compresses or decompresses a digital video–for example, you can compress an MP4 with the MPEG4 codec```mp4v```. This way, the output video frames will be compressed to a smaller file size suitable for viewing from your directory. To view a list of fourcc codes, see <a href="https://learn.microsoft.com/en-us/windows/win32/medfound/video-fourccs" target="_blank">Video FOURCCs.</a>
-  <br></p>
-The final parameters of this method are, respectively, frames per second (FPS) and the frame size of the output video. Setting an FPS that is too fast or slow will interfere with your detection algorithm's accuracy. A good starting point for the FPS is ten seconds. The following code sample shows how to call the ``` VideoWriter()``` method to write a video file in a given directory with today’s date:
-  <br></p>
+    To detect cars, download ```cars.xml```,  the ```Haar-Cascade XML``` file for car detection:
+    - Go to [Program Files](https://github.com/akltech/Vehicle-Detection/tree/main/Program%20Files) > Download the ```cars.xml``` file.<br><br>
+    - Place the ```cars.xml``` file in your **data** folder.
+
+## Steps
+
+  1.  [Read, display and write a video with the OpenCV HighGUI API.](#read-display-and-write-a-video-with-the-opencv-highgui-api)
+
+  1. [Apply image preprocessing techniques](#step-2-apply-image-preprocessing-techniques)
+
+  1. [Initialize the Cascade Classifier](#initialize-the-cascade-classifier)
+
+## Read, display and write a video with the OpenCV HighGUI API.
+
+Read, display, and write videos within OpenCV's HighGUI. Load local videos or capture streams from integrated cameras, like your web camera, interact with video frames in real-time, and write the video to your files.
+
+1. <p style="margin-bottom: 10px;">Read a video or capture an integrated camera stream, like a web cam: </p>
+
+    a. Import ```cv2```
+    
+    b. Create an instance of the ```VideoCapture()``` class:
+
+    - To read a video file, pass your video file as an argument:
+        
+        ```
+        cv2.VideoCapture('your video path.mp4')
+        ```
+
+    - To read a video from a web camera, pass `0` as an argument.
+
+    c. **Optional.** Set the resolution of your video frames. You might want to find the size of your input video frames to configure the size of your output frames. 
+
+    In the following code snippet, the first parameter passed to the ```get()``` function is the property constant ```CAP_PROP_FRAME_WIDTH```. This parameter returns the width of your frames. For more properties accesible through this method, view [Enumerations](https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html).
     ```
-    out = cv2.VideoWriter(f'C:/detect2/test{datetime.date.today()}.mp4',``` <br></p>
-    ```
-    cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10,  (frame_width,frame_height)) 
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     ```
     
-  5. Initialize a loop with the return value ```ret``` to indicate if you have captured the video frames. To read each frame, invoke the ```read()``` function.
- <br></p>
-     ```
-     while True:
-     ret, frame = cap.read()
-     if ret:
-     ```
-     
-  6. Next, display the video frames in the HighGUI window using the ```imshow()``` method. 
-  <br></p>
+    #### Try it out:
+
     ```
-    cv2.imshow('frame', frame)
+    import cv2
+
+    # Open your input video file 
+    cap = cv2.VideoCapture('your_video_path.mp4')
+
+    # Get the frame width and height
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    print(f"Frame Width: {frame_width}, Frame Height: {frame_height}")
+
+    # Release the video capture
+    cap.release()
     ```
-  7. Pass the frames into the video file by calling the ```write()``` function.
-  <br></p>
+
+1. <p style="margin-bottom: 10px;"> Write the frames to an output file and display the video: </p>
+    
+    a. Create an instance of the ```VideoWriter()``` class.
+
+    #### Videowriter() Parameters
+    | Parameter                | Description                                        |
+    | :----------------------- | :----------------------------------------------- |
+    | File path                | Set the path or filename to the output video file. |
+    | Fourcc                   | To compress and save the video frames, provide a FourCC codec. A codec is software that compresses or decompresses a video. For example, you can use the codec 'm', 'p', '4', 'v' for MP4 video compression. |
+    | Frame rate               | The frame rate is the number of frames per second (fps). Frame rates depend on your computational resources and object detection application. For example, video surveillance systems typically use a frame rate of 30 fps. To process a 3D model in real-time, you might require a frame rate up to 100 fps. |
+    | Resolution               | Set the resolution of the video frames.             |
+
+    The following code snippet shows how to create an instance of the ```VideoWriter()``` class. 
+
+    ```
+    file_path = 'your output video file path.mp4'
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    fps = 30.0
+    resolution = (1280, 1720)  
+    ```
+
+    b. Capture and process the input video frames. In the following code sample:
+    - The loop reads frames from the input video source, and each iteration of the loop reads the next frame. The ```read()``` function reads frames until the end of the video is reached.
+    - The ```frame``` variable stores each frame. ```frame``` is an OpenCV variable that stores the image data of each frame that is read.<br><br>
+    
+    ```# Loop through the video frames
+    while True:
+        ret, frame = cap.read()
+
+        # Check if the end of the video has been reached
+        if not ret:
+            break
+    ```
+
+    c. Display your video in a HighGUI window with the ```imshow()``` function. The following code snippets shows how to call the ``imshow()`` function to display your video frames. 
+    ```
+    # Show the video in a window named "frame"
+    # Store each frame that is shown with the frame variable
+    cv2.imshow("frame", frame)
+    ```
+
+    d. Write the frames to the output video file with the ``write()`` function:
     ```
     out.write(frame)
     ```
-  8. To process the GUI events, you must call the ```waitKey()``` method. The GUI will not display the video or react to keyboard input unless the event messages are processed. For example, ```waitKey(60)``` will suspend the program for sixty milliseconds or until a key press. Regardless of the given time, the window will close with keyboard input. 
-    <br></p>
-In most cases, an additional condition, such as a bit mask, is required to process videos when using OpenCV. In the following code sample, the GUI closes, and the while loop exits with a break after waiting for twenty-five milliseconds and then for a keyboard press.
-<br></p>
-     ```
-     if cv2.waitKey(25) & 0xFF == ord('q'):
-         break
-     ```
     
+    e. To keep the GUI window open until a key press, and process your video frames, call the ``waitKey()`` function. When you do not use this function, the GUI window will open and close almost immediately, and you will not be able to view or store the frames. 
+
+    You can use this function anywhere in your code where you want the GUI to wait for input.
+
+    #### waitKey()
+    Parameters | Description
+    :------------------: | :---------:
+    delay                | The amount of time in milliseconds that the GUI window will stay open for until a key press. To keep the window open until a key press, pass `0` as the argument. 
+
+    The following code snippets show two different methods to use the ```waitKey()```function.
+
+    ``` 
+    # Close the window after 5000 milliseconds or a key press
+    cv2.waitKey(5000)   
+    ```
+
+    ```
+    # Waits 25 milliseconds for a key press. If the key press is `q`, the loop breaks and the program ends.
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+    break
+    ```
+
+    e. Close the video capture object.
     
-  9. Close the video capture object and all frames by executing the ```release()``` function.
-  <br></p>
     ```
     cap.release()
     ```
-  10. Destroy the GUI window by calling the ```destroyAllWindows()``` method. The GUI window will usually close when the program terminates, but if you are executing it in Python from a terminal rather than a script, it can remain open until you quit Python. Calling ```destroyAllWindows()```  is a good practice to prevent an open GUI window from lingering.
-  <br></p>
+
+    d. **Optional.** To destroy the GUI window, call the ``destroyAllWindows()`` function. Typically, the GUI window closes when your program ends. However, if you run your program from the Python terminal, it might stay open until you close the terminal.
+
+    #### Try it out:
+
     ```
-    cv2.destroyAllWindows()
-    ```
-    
-## Step 2: Apply image preprocessing techniques
-
-Object detection algorithms can locate and mark target objects in an image, such as vehicles on a highway or clouds in the sky. Standard detection algorithms generally cannot find the target object if an image has a lot of noise. Noise is random brightness or color in an image that creates a grainy appearance similar to TV static. The result of too much noise in an image is the inability of the object detector to find the edges of the target image - which is needed to identify which areas of an image contain the target. The algorithm detects edges by finding pixels that contrast in darkness and light. Noise creates contrasting pixels across the image, which causes the detector to confuse random pixels scattered across an image as the target object. For this reason, blurring an image to remove the noise and lessen the contrast of pixels may improve detection abilities by making the distinction of edges more clear.
-  <br></p>
-The first image in figure 1 represents image noise in a picture of the sky. In the second image in figure 1, many small red dots are scattered across the image -  the detection algorithm was obstructed by the noise in the visual and failed to mark the edges of the target object, clouds. The last image in the figure demonstrates a blurred image of the sky that would result in more accurate detection.
-
-<p float="left">
-  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/sky%20with%20a%20lot%20of%20noise.jpg" width="300" />
-  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/result.jpg" width="300" /> 
-  <img src="https://github.com/akltech/Vehicle-Detection/blob/93899e8dfa69af52daee7c07d4a1fb59f53ccd99/Images/blurred%20sky.jpg" width="300" />
-</p>
-Figure 1. Image noise in a photo of the sky; poor detection accuracy in a photo with a high amount of image noise; a blurred image that may improve detection accuracy.
-  <br></p>
-The following steps are recommendations. Deviating from these steps and applying other image filters is OK. For other preprocessing techniques, see <a href="https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html" target="_blank">Image Filtering.</a>
-  <br></p>
-
-**Apply image filters:**
-
-  1. Blur the image with the ``` GausianBlur()``` method.
-The intensity of the blur depends on the kernel size; the more significant the kernel size, the more intense the blur effect. 
- <br></p>
-  ```frame = cv2.GaussianBlur(frame, (5, 5), 0)```
-  
-  2. Accentuate the features of each frame and further blur the image by calling the ```Dilate()``` function.
-  ```cv2.Dilate(frame, (5,5), 2)```
-  
-  3. Convert the frames to grayscale using the ```cvtColor()``` method.  Color is usually not helpful in identifying features such as edges in computer vision applications. Though, there are exclusions. For example,  if you want to detect objects of a specific color, such as red cars on a gray highway, you need information about the colors. Because the colors on the vehicles in the sample video vary greatly, you will convert the images to grayscale.
-    <br></p>
-OpenCV-Python provides color conversion codes or flags for converting images to different color spaces. For BGR to gray conversion, input the flag ```BGR2GRAY```  to the ```cvtColor()``` function, as shown in the following code. For a list of color conversion codes, see <a href="https://docs.opencv.org/4.x/df/d9d/tutorial_py_colorspaces.html/." target="_blank">Changing Colorspaces.</a>
-   <br></p>
-  ```gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)```
-  
-  4. Optional: After you apply blurring filters to remove noise, convert the video to binary format by calling the ```Laplacian()``` method. A binary image consists of only two-pixel colors, usually black and white. This technique makes it easier for computers to detect edges and, ultimately, the target objects in an image. Although in this tutorial, you will apply a grayscale filter to prepare the images for classification, binary image processing is a common technique in computer vision.
-   <br></p>
-An image's Laplacian highlights areas where the pixel intensity or brightness of the image changes rapidly, such as in the fast-moving frames of a video. Therefore, this type of edge detection is an ideal method for processing videos. This technique results in an image that looks like a pencil sketch of white pixels on a black background. For more information about the ```Laplacian()``` function, see <a href="https://github.com/akltech/Vehicle-Detection/blob/46307c825f0278b66932a2727e38cf4fed75cad8/Images/Laplacian_edge_detection.png">Image Filtering.</a>
-  <br></p>
-To apply Laplacian edge detection, modify the following code sample:
-    <br></p>
-    ```
-    frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
-    ```
-  <br />
-  <img width="440" height="430" src="https://github.com/akltech/Vehicle-Detection/blob/46307c825f0278b66932a2727e38cf4fed75cad8/Images/Laplacian_edge_detection.png">
-  Figure 2. A highway surveillance video converted to binary format with Laplacian edge detection.
-</p>
-<br />
- 
-
-## Step 3: Use the Haar Cascade classifier to detect vehicles
-
-The Cascade Classifier is a program designed to learn how to detect objects in an image, such as cars, on its own.
-  <br></p>
-Cascade classifiers are a series of tests run on hundreds of images, and each test checks if one part of an image is darker than its adjacent part. Positive images include the object you want to detect, such as cars, and the negative images are random or non-cars. The test database has samples of positive and negative images collected by developers.
-  <br></p> 
-Haar features are rectangular features. For example, if you want to find the cars in an image, you can collect the Haar features of cars with the Cascade Classifier. Haar features are universal patterns that you would find in an object. For example, all vehicles have a front window and a steering wheel. The classifier scans the entire image looking for regions where one part of the rectangle is darker than its adjacent part, such as a car's front window, as shown in figure 3.
-
-<img width="500" height="330" src="Images/haarlikefeatures-example.png">
-  Figure 3. Two adjacent rectangles represent a Haar-like feature of a vehicle.
-</p>
-
-
-**Draw bounding boxes around each car:**
-
-  1. To locate the cars in each frame, create a classifier by calling the ```CascadeClassifier()``` method and passing the ```cars.xml``` file as a parameter. The XML file contains Haar features of cars from a pre-trained classifier. 
-
-    <br></p>
-    ```
-    car_cascade = cv2.CascadeClassifier('cars.xml')
-    ```
-  
-  2. Return the location of each car using the ```detectMultiScale()``` method. In object detection, a bounding box usually describes the location of an object. The bounding box is rectangular and determined by the top-left coordinate of the rectangle as ```(x,y)``` and the width and height as ```(w,h)```.
-  <br></p>
-    In the following code sample, the ```detectMultiScale()``` method returns the bounding box coordinates of each car as a list.
-
-<br></p>
-    ```
-    cars = car_cascade.detectMultiScale(gray, 1.1, 1)
-    ```
-   <br></p> 
-  3. Draw the bounding boxes on each frame by calling the ```rectangle()``` function. For every ```(x,y,w,h)``` coordinate found with the ```detectMultiScale()``` method, the ```rectangle()``` function will print a rectangle. 
-    <br></p>
-     ```
-     for (x, y, w, h) in cars:
-         cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
-     ```
- 
-**Modify the following code sample to create a vehicle detection program:**
-
     import cv2
-    import datetime
-    
-    cap = cv2.VideoCapture('C:/cardetect/samplevideo.mp4')
-    frame_width = int(cap.get(3))
-    frame_height = int(cap.get(4))
-    # Write the video file 
-    out = cv2.VideoWriter(f'C:/cardetect/test{datetime.date.today()}.mp4',
-    cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width,frame_height))
+
+    cap = cv2.VideoCapture('test-video.mp4')
 
     while True:
-    # Capture each frame of the video
         ret, frame = cap.read()
-        if ret:    
 
-            frame = cv2.GaussianBlur(frame, (5, 5), 0)
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
-
-            # Load the cars.xml file into the classifier
-            car_cascade = cv2.CascadeClassifier('C:/cardetect/cars.xml')
-            # Detect objects of different sizes in each frame 
-            # and return a list of rectangles
-            cars = car_cascade.detectMultiScale(gray, 1.1, 1)
-            # Read the list of rectangles to draw rectangle boundaries 
-            # around the cars in each frame
-            for (x, y, w, h) in cars:
-                cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
-
-            cv2.imshow("frame", frame)
-            out.write(frame)
-            # Break the loop with a key event
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
-        else:
+        if not ret:
             break
-            
+
+    cv2.imshow('Video', frame)
+    
+    # Add a twenty-five millisecond delay and wait for a key press
+    # Break the loop if the 'q' key is pressed
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
     cap.release()
     cv2.destroyAllWindows()
+    ```
+
+## Apply image preprocessing techniques 
+
+Certain image properties, such as noise, color, and contrast, change the efficacy of the object detection framework. When you remove noise and color from your input video, the results of your object detection framework might improve. You can change the look of your video with OpenCV's filters. 
+
+The following techniques are recommendations. For all OpenCV image preprocessing functions, view [Image Filtering](https://docs.opencv.org/3.4/d4/d86/group__imgproc__filter.html).
+
+### Reduce noise with a Gaussian Blur 
+
+A common method to remove noise from an image is to blur the image. However, excessive noise reduction can remove fine details and edges from objects. Your object detector needs these details to detect the objects effectively. 
+
+When you want to reduce noise in an image, but maintain the fine details, you can use a gausian blur. The GaussianBlur() function uses Gaussian distribution to distribute a blur effect to each pixel and it's neighborhood pixels. This function adapts the blur level to the neighborhood pixel values. 
+
+#### gausianBlur() 
+
+Parameters                   | Description
+:----------------------------------------: | :----------:
+src                                        | Set your input video or image file path.  
+kernel size                                | The blur intensity depends on the kernel size; the more significant the kernel size, the more intense the blur effect will be. For more detailed information on kernels, view the following section. 
+Standard Deviation (Sigma)                 | Set the standard deviation to `0` to automatically generate the strength of the blur based on your kernel size. For more information on standard deviation in this function, view [Standard deviation in GausianBlur()](standard-deviation-in-gausianblur()). 
+
+The following code snippet shows how to use the ```gausianBlur()``` function.
+```
+cv2.GaussianBlur(frame, ksize, std)
+```
+
+### Kernel size
+
+Kernel size is fundamental topic in computer vision. A kernel is a small filter, like a window, that moves across each pixel in an image. The kernel size controls the extent of a filter, such as a blur. 
+
+Suppose you want to blur your video or image. The extent of the blur on central pixel, or the current pixel that the kernel is on, depends on it's neighborhood pixels. In a 3 x 3 kernel, the neighborhood would be the eight pixels around the central pixel: 
+
+<table>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
+
+All pixels in a kernel have a value based on their grayscale or color intensity. Suppose you want to apply a blur to your video with the GausianBlur() function. The goal of this filter is to blur the central pixel with its neighbors, as a result:
+
+- **A small kernel size (neighborhood), like a 3 x 3, creates a minor blur effect.** In a kernel, the goal is to average the color or grayscale intensities of the central pixel with those of its neighbors. The extent of blur applied to the central pixel is determined by the weighted average of the central pixel and its neighboring pixels.
+
+    The greater the number of neighbors within a kernel, the stronger the weighted average effect and the more intense the blur. For example, in a 3 x 3 kernel, the central pixel is averaged with its eight neighboring pixels. The smaller neighborhood size results in a less pronounced blur effect.
+- **A large kernel size, like a 5 x 5, creates a more significant blur effect.** In a 5 x 5 kernel, the goal is to average the central pixel with its twenty-four neighborhood pixels. The larger weighted average creates a more noticeable blur.
+
+### Standard deviation in the GausianBlur() function
+
+Together, the kernel size and standard deviation control the extent and intensity of the blur effect. The ```GaussianBlur()``` function uses a standard deviation to control the distribution, or intensity, of the blur. 
+
+- A high standard deviation leads to a stronger blur of the central pixel with its neighborhood.
+- A lower standard deviation results in a milder blur of the central pixel and its neighbors.
+
+If you set the standard deviation to `0`, the correct blur level will be set automatically based on the kernel size.
+
+### Dilate each frame
+
+The ```dilate()``` function expands the size bright regions in an image, or image regions in the foreground. You might use this function to make objects more prominent in an image. For example, if a car's edges blends in with it's shadows, you can apply the ```dilate()``` function to make the vehicle edges more distinct. The ```dilate()``` function only changes the size and shape of image regions.
+
+#### dilate()
+Parameters                   | Description
+:----------------------------------------: | :----------:
+src                                        | Set your input video or image file path.  
+kernel size                                | The dilation intensity depends on the kernel size; the more significant the kernel size, the more intense the dilate will be. For more detailed information on kernels, view [Kernels](#kernels). 
+Number of iterations                       | Set the number of iterations for the dilate operation. 
+
+### Convert the frames to grayscale
+
+The Cascade Classifier uses a pretrained model that was trained on grayscale images. To help detect objects better, you can convert your frames to grayscale with the ```cvtColor()``` function. However, your application might need color. For example, you might want to create a program that detects all red cars on a highway. 
+
+#### cvtColor()
+
+Parameters                   | Description
+:----------------------------------------: | :----------:
+src                                        | Set your input video or image file path.   
+Color space conversion method              | For color to gray conversion, use the flag BGR2GRAY. For more information on color conversion codes, see [Changing Colorspaces](https://docs.opencv.org/3.4/df/d9d/tutorial_py_colorspaces.html#changing-colorspaces) 
+
+### Apply laplacian edge detection 
+
+Edge detection can improve the result of your object detection algorithm by convert each frame to binary. Edge detection is different from grayscale, as a binary image has only two pixel colors, typically black and white.
+
+This function highlights areas in a frame where the pixel intensity changes rapidly. To apply laplacian edge detection to your video or image, call the ```laplacian()``` function.
+
+#### laplacian()
+Parameters                     | Description
+:----------------------------------------: | :-----------------------------:
+src                                        | Set your input video file path.  
+ddepth                                     | Decide how intense the detected edges will be. In the following code sample, the output data type cv2,CV_8U is used. For more information on this data type, view [One Important Matter](https://docs.opencv.org/4.x/d5/d0f/tutorial_py_gradients.html#one-important-matter)  
+ksize                                      | Set the kernel size. For more information, view [Kernels](Kernels). 
+
+### Try it out:
+
+``````
+import cv2
+import datetime
+
+# Replace 'your_video_path' with the path to your video file or the sample file
+video_path = 'your_video_path.mp4'
+
+cap = cv2.VideoCapture(video_path)
+frame_width = int(cap.get(3))
+frame_height = int(cap.get(4))
+
+# Define the output video file path
+output_video_path = f'output_{datetime.date.today()}.mp4'
+
+# Write the processed frames to an output file path
+out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width, frame_height))
+
+while True:
+    # Capture each frame of the video
+    ret, frame = cap.read()
+    if ret:
+        # Apply image processing (e.g., Gaussian blur, Laplacian, etc.) here
+        frame = cv2.GaussianBlur(frame, (5, 5), 0)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		frame = cv2.Dilate(frame, (5,5), 2)
+
+        # Display the processed frame
+        cv2.imshow("frame", frame)
+        out.write(frame)
+
+        # Break the loop with the 'q' key
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    else:
+        break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+``````
+
+## Initialize the Cascade Classifier
+
+A Cascade Classifier is a machine learning framework commonly used for object detection. This framework uses trained classifiers to find patterns in an image that are consistent with the object you want to detect. 
+
+### Haar-like features 
+
+Suppose you want to train a cascade classifier to detect cars. Thousands of images with cars (positive images), and images without cars (negative images), are tested by classifier. These series of tests collect Haar-like features from the positive images. 
+
+Haar-like features are universal patterns that you find in an object, like wheels on a car. These features are rectangular patterns of pixel values. 
+
+In this tutorial, you will use a pretrained classifier that has previously created Haar-like features for an object. 
+
+### Load the Pretrained Cascade Classifier
+
+To initalize the Cascade Classifier:
+
+1. Call the CascadeClassifier() function and pass a Haar cascades file as a parameter. In the following code snippet, a Haar Cascades for cars is combined with the CascadeClassifier().
+    <br></p>
+    ```
+    cv2.CascadeClassifier('cars.xml')
+    ```
+
+    a. Call the ```detectMultiScale()``` function. This function looks for objects at different sizes and locations. Next, the function returns a list of ```(x,y,w,h)``` rectangle coordinates around each object.<br>
+    <style>
+        table {
+            width: 60%; /* Adjust the width to your preference */
+            font-size: 15px; /* Adjust the font size to your preference */
+    }
+    </style>
+    
+   #### detectMultiScale()
+   | Required parameters        | Description                                       |
+   | ----------------------------------- | ------------------------------------------------- |
+   | image                                 | Set your input video or image file path.         |
+   | scaleFactor                              | A small scale factor, for example ```1.02```, will slow down the object detection rate, but improve the chance of detection of the object of interest at all scales. <br><br>A large scale factor, for example ```2```, will result faster detection, but objects on a smaller scale or in the distance might be missed.                     |
+   | minNeighbors                          | When you set a high value for this parameter, like ```3```,  your system will look for multiple similar detections grouped before it decides a region is your object of interest. In some applications, like face detection on a crowded street, a high value could result in false negatives because the system waits for groups of detections before identification. <br><br>A low value, like```1```, looks for less evidence of the object around the region. You might get more false positives with a low value if there are objects that could resemble the object of interest around the area. |
+
+   In the following code snippet, a moderate ```scaleFactor``` value and a low ```minNeighbors``` value are set as parameters for ```detectMultiScale()``` function.
+
+   <br>A low value for the ```scaleFactor``` makes the algorithm more likely to detect objects on a smaller scale or, cars in the distance. In the input video, a highway surivellance video, there are often cars that overlap. With a low ```minNeighbors``` value, the system will be more sensitive to individual instances of the cars, and more likely to detect overlapping cars.
+    <br>
+    ```
+    import cv2
+
+    # Load the pre-trained car detection classifier
+    car_cascade = cv2.CascadeClassifier('cars.xml')
+
+    # Load the input image or video frame
+    image = cv2.imread('sample-image.jpg')  # For image, use 'sample-image.jpg'; for video, capture frames from 'sample-video.mp4'
+
+    # Detect cars and return locations with detectMultiScale()
+    cars = car_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=1, minSize=(30, 30))
+
+    ...
+
+    ```
+   
+
+    <br>b. Draw a bounding box around each object with the ```rectangle()``` function. In object detection, a bounding box is a rectangular region that surrounds the object of interest.<br></p>
+    In the following code snippet, the `rectangle()` function prints rectangles with the ```(x, y, w, h)``` coordinates from the previous step.
+   <br></p>
+   ```
+     for (x, y, w, h) in cars:
+         cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
+   ```
+
+    <style>
+        table {
+            width: 60%; /* Adjust the width to your preference */
+            font-size: 15px; /* Adjust the font size to your preference */
+    }
+    </style>
+
+    #### rectangle() 
+   | Parameters        | Description                                       |
+   | ----------------------------------- | ------------------------------------------------- |
+   | src                                 | Set your input video or image file path.         |
+   | (x, y)                              | Top-left corner of rectangle.                     |
+   | (x+w, y+h)                          | Bottom-right corner of rectangle. (x, y) are the coordinates of the top-left corner. w and h are the width and height. |
+   | Rectangle color                     | Choose a BGR color. For example, (0, 0, 255) for a red rectangle. |
+   | Rectangle line width                | Set the width of the rectangle border.              |
+
+### Try it out:
+
+```
+import cv2
+import datetime
+
+# Replace 'your_video_path' with the path to your video file or the sample file
+video_path = 'your_video_path.mp4'
+
+cap = cv2.VideoCapture(video_path)
+frame_width = int(cap.get(3))
+frame_height = int(cap.get(4))
+
+# Define the output video file path
+output_video_path = f'output_{datetime.date.today()}.mp4'
+
+# Write the processed frames to an output file path 
+out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 10, (frame_width, frame_height))
+
+while True:
+    # Capture each frame of the video
+    ret, frame = cap.read()
+    if ret:
+        # Apply image processing (e.g., Gaussian blur, Laplacian, etc.) here
+        frame = cv2.GaussianBlur(frame, (5, 5), 0)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        frame = cv2.Laplacian(src=frame, ddepth=cv2.CV_8U, ksize=3)
+
+        # Load the car detection classifier (replace 'your_classifier.xml' with the actual XML file)
+        car_cascade = cv2.CascadeClassifier('your_classifier.xml')
+
+        # Detect objects of interest in each frame
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cars = car_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=1)
+
+        # Draw rectangles around detected objects 
+        for (x, y, w, h) in cars:
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        # Display the processed frame
+        cv2.imshow("frame", frame)
+        out.write(frame)
+
+        # Break the loop with the 'q' key
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    else:
+        break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+``````
+
