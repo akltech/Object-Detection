@@ -15,24 +15,25 @@ When this process is complete, the classifier generates a pretrained model.
 
 - Install OpenCV and Python. For more information, view [Get Started](https://opencv.org/get-started/). 
 - Ensure that you have the pretrained models, or ```Cascade XML``` files in your **OpenCV directory**:
-  - Go to your **OpenCV directory** > Select the **data** folder > Select the **haarcascades** folder.
+  - Go to your **OpenCV directory** > Select the **data** folder.
+  - Select the **haarcascades** folder.
   
     The **haarcascades** folder contains ```Haar-Cascade XML``` files. These files are pretrained classifiers for different objects. For example, the ```haarcascade_eye.xml``` file is a classifier trained to detect eyes.
 
-> If you do not have the Haar Cascade files, you must install the openCV-contrib module. To install this module, run the command: ***pip install opencv-contrib-python*** 
-- Prepare an input video or image if you do not plan to use an integrated camera, like a web camera. In this tutorial, the input video is highway surveillance footage. To download the input video:
+	⚠ If you do not have the Haar Cascade files, you must install the openCV-contrib module. To install this module, run the command:                         
+   	***pip install opencv-contrib- python*** 
+- Prepare an input video or image if you do not plan to use an integrated camera, like a web camera. In this tutorial, the input video is highway surveillance footage. To download the input video:<br><br>
     -  Go to [Program Files](https://github.com/akltech/Vehicle-Detection/tree/main/Program%20Files) > Download the ```samplevideo.mp4``` file.  <br><br>
-- Prepare or download a pretrained model or ```Haar-Cascade XML``` file. The classifier you choose depends on your application. 
-    
-    To detect cars, download ```cars.xml```,  the ```Haar-Cascade XML``` file for car detection:
-    - Go to [Program Files](https://github.com/akltech/Vehicle-Detection/tree/main/Program%20Files) > Download the ```cars.xml``` file.<br><br>
+- Prepare or download a pretrained model or ```Haar-Cascade XML``` file. The classifier you choose depends on your application.     
+    To detect cars, download ```cars.xml```,  the ```Haar-Cascade XML``` file for car detection:<br><br>
+    - Go to [Program Files](https://github.com/akltech/Vehicle-Detection/tree/main/Program%20Files) > Download the ```cars.xml``` file.
     - Place the ```cars.xml``` file in your **data** folder.
 
 ## Steps
 
   1.  [Read, display and write a video with the OpenCV HighGUI API.](#read-display-and-write-a-video-with-the-opencv-highgui-api)
 
-  1. [Apply image preprocessing techniques](#step-2-apply-image-preprocessing-techniques)
+  1. [Apply image preprocessing techniques](#apply-image-preprocessing-techniques)
 
   1. [Initialize the Cascade Classifier](#initialize-the-cascade-classifier)
 
