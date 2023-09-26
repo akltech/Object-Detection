@@ -1,10 +1,11 @@
 # Tutorial: Detect and track objects in real-time with OpenCV
 
-OpenCV's Cascade Classifier is a machine learning framework for object detection. You can leverage a Cascade Classifier with a pretrained model to detect and track objects in real-time:
- 
-- The pretrained model contains the features needed to detect an object.
-- To detect an object of interest, researchers train classifiers on large datasets over long periods of time.
-When this process is complete, the classifier generates a pretrained model. 
+Tutorial: Detect and track objects in real-time with OpenCV 
+Detect and track objects in an image or video with tools in OpenCV, a computer vision library. To achieve object detection with OpenCV, you can use OpenCV’s Cascade Classifier, a machine learning framework. The Cascade Classifier is often used with pretrained models for several reasons:
+
+- You need extensive resources to train a Cascade Classifier to detect an object of interest. Researchers train classifiers on large datasets over long periods of time.
+- - You can leverage the model’s knowledge. The pretrained model contains the features needed to detect an object. 
+
 
 ### What you will learn
 
